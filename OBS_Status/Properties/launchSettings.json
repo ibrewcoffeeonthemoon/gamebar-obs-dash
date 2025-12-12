@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "OBS_Status": {
+      "commandName": "MsixPackage"
+    }
+  }
+}
