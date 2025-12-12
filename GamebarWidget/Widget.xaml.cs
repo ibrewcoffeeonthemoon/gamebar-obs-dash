@@ -22,13 +22,15 @@ namespace GamebarOBSDash
     /// </summary>
     public sealed partial class Widget1 : Page
     {
-        public Widget1()
+		WebSocketClient ws = new WebSocketClient();
+
+		public Widget1()
         {
             this.InitializeComponent();
         }
-        private void MyButton_Click(object sender, RoutedEventArgs e)
+        private async void MyButton_Click(object sender, RoutedEventArgs e)
         {
-            myButton.Content = "Clicked";
-        }
+			await ws.ConnectAndSendMessageAsync();
+		}
     }
 }
