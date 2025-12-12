@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 
-namespace OBS_Status // <-- match your project namespace
+namespace OBS_Status.WebSocket
 {
-	public class WebSocketClient
+	public class Client
 	{
 		private const string ServerAddress = "127.0.0.1";
 		private const string ServerPort = "4455";

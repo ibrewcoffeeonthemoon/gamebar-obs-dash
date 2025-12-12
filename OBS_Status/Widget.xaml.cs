@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using OBS_Status.WebSocket;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -22,7 +23,7 @@ namespace OBS_Status
     /// </summary>
     public sealed partial class Widget : Page
     {
-		WebSocketClient ws = new WebSocketClient();
+		Client ws = new Client();
 
 		public Widget()
         {
