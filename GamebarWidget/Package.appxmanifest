@@ -70,6 +70,9 @@
             </uap3:Properties>
           </uap3:AppExtension>
         </uap3:Extension>
+        <uap:Extension Category="windows.appService" EntryPoint="GameBarWidget.App">
+          <uap:AppService Name="com.example.gamebar.echo"/>
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
