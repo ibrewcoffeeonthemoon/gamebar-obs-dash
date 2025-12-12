@@ -13,4 +13,7 @@
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="obs-websocket-dotnet" Version="5.0.1" />
+  </ItemGroup>
 </Project>
