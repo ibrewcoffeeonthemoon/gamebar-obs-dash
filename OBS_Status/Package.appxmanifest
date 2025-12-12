@@ -44,7 +44,7 @@
       <Extensions>
         <uap3:Extension Category="windows.appExtension">
           <uap3:AppExtension Name="microsoft.gameBarUIExtension"
-                             Id="Widget1"
+                             Id="Widget"
                              DisplayName="OBS Status"
                              Description="Gamebar OBS Status Widget"
                              PublicFolder="GameBar">

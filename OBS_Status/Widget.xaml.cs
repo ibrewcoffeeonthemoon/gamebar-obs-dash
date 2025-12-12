@@ -20,11 +20,11 @@ namespace OBS_Status
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Widget1 : Page
+    public sealed partial class Widget : Page
     {
 		WebSocketClient ws = new WebSocketClient();
 
-		public Widget1()
+		public Widget()
         {
             this.InitializeComponent();
         }
