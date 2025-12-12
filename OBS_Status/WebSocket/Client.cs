@@ -24,9 +24,10 @@ namespace OBS_Status.WebSocket
 
 				ws.MessageReceived += Ws_MessageReceived;
 
-				Debug.WriteLine("Connecting to OBS...");
+				string endpoint = $"ws://{ServerAddress}:{ServerPort}";
+				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
 
-				await ws.ConnectAsync(new Uri("ws://127.0.0.1:4455"));
+				await ws.ConnectAsync(new Uri(endpoint));
 
 				Debug.WriteLine("Connected!");
 
