@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Gaming.XboxGameBar;
 
-namespace GamebarOBSDash
+namespace OBS_Status
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
