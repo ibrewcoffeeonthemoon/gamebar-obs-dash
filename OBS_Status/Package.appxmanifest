@@ -41,6 +41,37 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="microsoft.gameBarUIExtension"
+                             Id="Widget"
+                             DisplayName="OBS Status"
+                             Description="Gamebar OBS Status Widget"
+                             PublicFolder="GameBar">
+            <uap3:Properties>
+              <GameBarWidget Type="Standard">
+                <HomeMenuVisible>true</HomeMenuVisible>
+                <PinningSupported>true</PinningSupported>
+                <FavoriteAfterInstall>true</FavoriteAfterInstall>
+                <Window>
+                  <Size>
+                    <Height>120</Height>
+                    <Width>150</Width>
+                    <MinHeight>64</MinHeight>
+                    <MinWidth>96</MinWidth>
+                    <MaxHeight>240</MaxHeight>
+                    <MaxWidth>320</MaxWidth>
+                  </Size>
+                  <ResizeSupported>
+                    <Horizontal>true</Horizontal>
+                    <Vertical>true</Vertical>
+                  </ResizeSupported>
+                </Window>
+              </GameBarWidget>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
     </Application>
   </Applications>
 
