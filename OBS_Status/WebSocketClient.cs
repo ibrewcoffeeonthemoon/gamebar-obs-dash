@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 
-namespace GamebarOBSDash // <-- match your project namespace
+namespace OBS_Status // <-- match your project namespace
 {
 	public class WebSocketClient
 	{

@@ -16,14 +16,14 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Gaming.XboxGameBar;
 
-namespace GamebarOBSDash
+namespace OBS_Status
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
-        private XboxGameBarWidget widget1 = null;
+        private XboxGameBarWidget widget = null;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -79,13 +79,13 @@ namespace GamebarOBSDash
                     Window.Current.Content = rootFrame;
 
                     // Create Game Bar widget object which bootstraps the connection with Game Bar
-                    widget1 = new XboxGameBarWidget(
+                    widget = new XboxGameBarWidget(
                         widgetArgs,
                         Window.Current.CoreWindow,
                         rootFrame);
-                    rootFrame.Navigate(typeof(Widget1));
+                    rootFrame.Navigate(typeof(Widget));
 
-                    Window.Current.Closed += Widget1Window_Closed;
+                    Window.Current.Closed += WidgetWindow_Closed;
 
                     Window.Current.Activate();
                 }
@@ -96,10 +96,10 @@ namespace GamebarOBSDash
             }
         }
 
-        private void Widget1Window_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
+        private void WidgetWindow_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
         {
-            widget1 = null;
-            Window.Current.Closed -= Widget1Window_Closed;
+            widget = null;
+            Window.Current.Closed -= WidgetWindow_Closed;
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace GamebarOBSDash
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 
-            widget1 = null;
+            widget = null;
 
             deferral.Complete();
         }
