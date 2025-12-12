@@ -8,7 +8,7 @@
   IgnorableNamespaces="uap uap3 mp">
 
   <Identity
-    Name="OBS_Status"
+    Name="OBS-Status"
     Publisher="CN=Ibrewcoffee Onthemoon"
     Version="1.0.0.0" />
 
