@@ -14,13 +14,14 @@ namespace OBS_Status
     {
 		public WidgetPage()
         {
+            // init UI
             this.InitializeComponent();
             Debug.WriteLine("WidgetPage initialized.");
-
+            // register onloaded handler
             this.Loaded += OnLoaded;
-
-		    Client.Instance.Initialize(this);
-        }
+            // store reference to this page in Client singleton
+            Client.Instance.Page = this; 
+		}
         ~WidgetPage()
         {
             Debug.WriteLine("WidgetPage destroyed.");
