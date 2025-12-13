@@ -20,7 +20,7 @@ namespace OBS_Status.WebSocket
 					// Manual, safe UI update using stored page reference
 					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
 					{
-						Page.StatusBorder.Background = new SolidColorBrush(value ? Colors.LightGreen : Colors.DarkSlateBlue);
+						Page.StatusBorder.Background = new SolidColorBrush(value ? Colors.DarkGreen : Colors.DarkSlateBlue);
 						// Add more if you have text or dot:
 						// Page.statusTextBlock.Text = value ? "Connected" : "Disconnected";
 						// Page.statusDot.Fill = new SolidColorBrush(value ? Colors.LightGreen : Colors.DarkSlateBlue);
