@@ -3,13 +3,36 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Windows.Networking.Sockets;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Media;
 
 namespace OBS_Status.WebSocket
 {
 	public partial class Client
 	{
-		private bool isConnected = false;
+		// State
+		private bool _isConnected;
+		public bool IsConnected
+		{
+			get => _isConnected;
+			set
+			{
+				if (_isConnected != value)
+				{
+					_isConnected = value;
+
+					// Manual, safe UI update using stored page reference
+					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+					{
+						Page.StatusBorder.Background = new SolidColorBrush(value ? Colors.LightGreen : Colors.DarkSlateBlue);
+						// Add more if you have text or dot:
+						// Page.statusTextBlock.Text = value ? "Connected" : "Disconnected";
+						// Page.statusDot.Fill = new SolidColorBrush(value ? Colors.LightGreen : Colors.DarkSlateBlue);
+					});
+				}
+			}
+		}
 
 		private const string ServerAddress = "127.0.0.1";
 		private const string ServerPort = "4455";
@@ -43,7 +66,7 @@ namespace OBS_Status.WebSocket
 		public async Task Connect()
 		{
 			// Check if already connected
-			if (isConnected)
+			if (IsConnected)
 			{
 				Debug.WriteLine("WebSocket is already connected.");
 				return;  // Don't connect again
@@ -90,6 +113,7 @@ namespace OBS_Status.WebSocket
 					case OpCode.Identified:
 						Debug.WriteLine("Successfully identified with OBS-WebSocket!");
 						// Connection is now ready for requests
+						IsConnected = true;
 						break;
 
 					case OpCode.Event:

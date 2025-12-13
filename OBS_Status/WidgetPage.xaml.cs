@@ -12,8 +12,6 @@ namespace OBS_Status
     /// </summary>
     public sealed partial class WidgetPage : Page
     {
-		public Border StatusBorder => statusBorder;
-
 		public WidgetPage()
         {
             this.InitializeComponent();

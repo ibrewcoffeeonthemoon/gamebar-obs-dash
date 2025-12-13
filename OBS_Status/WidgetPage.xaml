@@ -8,7 +8,8 @@
     mc:Ignorable="d"
     >
 	<Border 
-		x:Name="statusBorder"
+		x:Name="StatusBorder"
+		x:FieldModifier="public"
 		Background="DodgerBlue"
 		BorderBrush="DarkSlateBlue"
 		HorizontalAlignment="Stretch"
