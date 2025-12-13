@@ -30,9 +30,5 @@ namespace OBS_Status
         {
             await client.Connect();
 		}
-		private async void MyButton_Click(object sender, RoutedEventArgs e)
-        {
-			await client.Connect();
-		}
 	}
 }

@@ -16,8 +16,18 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Orientation="Vertical">
-            <TextBlock Padding="0,0,0,5" Text="OBS Studio" />
-            <Button x:Name="myButton" Click="MyButton_Click">Connect</Button>
-        </StackPanel>
+			<Button
+                Width="100"
+                Height="40"
+                Background="DodgerBlue"
+                BorderBrush="DarkSlateBlue"
+                BorderThickness="2"
+                CornerRadius="20"
+                Content="--"
+                FontSize="16"
+                Foreground="White" 
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"/>
+		</StackPanel>
     </Grid>
 </Page>
