@@ -9,11 +9,11 @@ namespace OBS_Status
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Widget : Page
+    public sealed partial class WidgetPage : Page
     {
 		Client ws = new Client();
 
-		public Widget()
+		public WidgetPage()
         {
             this.InitializeComponent();
         }

@@ -73,7 +73,7 @@ namespace OBS_Status
                         widgetArgs,
                         Window.Current.CoreWindow,
                         rootFrame);
-                    rootFrame.Navigate(typeof(Widget));
+                    rootFrame.Navigate(typeof(WidgetPage));
 
                     Window.Current.Closed += WidgetWindow_Closed;
 
