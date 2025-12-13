@@ -30,7 +30,6 @@ namespace OBS_Status
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             // init Client Instance only once onloaded
-		    Client.Instance.Initialize(this);
             Debug.WriteLine("Client instance initialized");
 			// enables automatic updates for ALL bindings in XAML
 			this.DataContext = Client.Instance;

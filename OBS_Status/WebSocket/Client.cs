@@ -29,16 +29,6 @@ namespace OBS_Status.WebSocket
 		// Public way to access the single instance
 		public static Client Instance => _instance.Value;
 		// This will hold the reference to your WidgetPage (or just the dispatcher)
-		public WidgetPage Page { get; private set; }
-		// Call this once, right after the app/widget starts
-		public void Initialize(WidgetPage page)
-		{
-			if (Page != null)
-				throw new InvalidOperationException("Client already initialized.");
-			Page = page;
-			// You can also store the dispatcher here if you need it later
-			// Dispatcher = page.Dispatcher;
-		}
 
 		public async Task Connect()
 		{
