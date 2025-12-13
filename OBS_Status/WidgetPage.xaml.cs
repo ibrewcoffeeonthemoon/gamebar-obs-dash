@@ -12,14 +12,17 @@ namespace OBS_Status
     /// </summary>
     public sealed partial class WidgetPage : Page
     {
-		Client client = new Client();
+		Client client;
+		public Border StatusBorder => statusBorder;
 
-        public WidgetPage()
+		public WidgetPage()
         {
             this.InitializeComponent();
             Debug.WriteLine("WidgetPage initialized.");
 
             this.Loaded += OnLoaded;
+
+		    client = new Client(this);
         }
         ~WidgetPage()
         {

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
+using Windows.UI.Xaml.Media;
 
 namespace OBS_Status.WebSocket
 {
@@ -12,16 +13,21 @@ namespace OBS_Status.WebSocket
 
 		private const string ServerAddress = "127.0.0.1";
 		private const string ServerPort = "4455";
+		private WidgetPage widgetPage;
 		private MessageWebSocket socket;
 
-		public Client()
+		public Client(WidgetPage widgetPage)
 		{
+			this.widgetPage = widgetPage;
+
 			// create the websocket
 			socket = new MessageWebSocket();
 			socket.Control.MessageType = SocketMessageType.Utf8;
 
 			// register message handler
 			socket.MessageReceived += OnMessageReceive;
+
+			updateColor();
 		}
 
 		public async Task Connect()
@@ -43,10 +49,26 @@ namespace OBS_Status.WebSocket
 				// connection establishd
 				Debug.WriteLine("Connected!");
 				isConnected = true;
+
+				// change text box color to green
+				updateColor();
+
 			}
 			catch (Exception ex)
 			{
 				Debug.WriteLine("[WebSocket] " + ex.Message);
+			}
+		}
+
+		private void updateColor()
+		{
+			if (isConnected)
+			{
+				widgetPage.StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Green);
+			}
+			else
+			{
+				widgetPage.StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.DarkSlateBlue);
 			}
 		}
 
