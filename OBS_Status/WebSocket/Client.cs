@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Media;
 
 namespace OBS_Status.WebSocket
 {
-	public class Client
+	public partial class Client
 	{
 		private static bool isConnected = false;
 
@@ -78,7 +78,6 @@ namespace OBS_Status.WebSocket
 			{
 				// read the message
 				string msg = reader.ReadString(reader.UnconsumedBufferLength);
-				Debug.WriteLine("OBS → " + msg);
 
 				// Parse the JSON into our generic ObsMessage object
 				Message message = JsonConvert.DeserializeObject<Message>(msg);
@@ -95,8 +94,8 @@ namespace OBS_Status.WebSocket
 				switch ((OpCode)message.Op)
 				{
 					case OpCode.Hello:
-						// HandleHello(message.D);
 						Debug.WriteLine("Received Hello from OBS-WebSocket.");
+						HandleHello(message.D);
 						break;
 
 					case OpCode.Identified:
