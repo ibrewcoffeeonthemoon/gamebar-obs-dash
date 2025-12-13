@@ -70,18 +70,6 @@ namespace OBS_Status.WebSocket
 			}
 		}
 
-		private void updateColor()
-		{
-			if (isConnected)
-			{
-				Page.StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Green);
-			}
-			else
-			{
-				Page.StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.DarkSlateBlue);
-			}
-		}
-
 		private void OnMessageReceive(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args)
 		{
 			using (var reader = args.GetDataReader())
