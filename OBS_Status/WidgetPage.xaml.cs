@@ -1,6 +1,8 @@
 ﻿using OBS_Status.WebSocket;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System.Diagnostics;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -13,13 +15,18 @@ namespace OBS_Status
     {
 		Client ws = new Client();
 
-		public WidgetPage()
+        public WidgetPage()
         {
             this.InitializeComponent();
+            Debug.WriteLine("WidgetPage initialized.");
         }
-        private async void MyButton_Click(object sender, RoutedEventArgs e)
+        ~WidgetPage()
+        {
+            Debug.WriteLine("WidgetPage destroyed.");
+        }
+		private async void MyButton_Click(object sender, RoutedEventArgs e)
         {
 			await ws.ConnectAndSendMessageAsync();
 		}
-    }
+	}
 }
