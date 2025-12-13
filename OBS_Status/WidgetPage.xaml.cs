@@ -12,7 +12,6 @@ namespace OBS_Status
     /// </summary>
     public sealed partial class WidgetPage : Page
     {
-		Client client;
 		public Border StatusBorder => statusBorder;
 
 		public WidgetPage()
@@ -22,7 +21,7 @@ namespace OBS_Status
 
             this.Loaded += OnLoaded;
 
-		    client = new Client(this);
+		    Client.Instance.Initialize(this);
         }
         ~WidgetPage()
         {
@@ -31,7 +30,7 @@ namespace OBS_Status
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await client.Connect();
+            await Client.Instance.Connect();
 		}
 	}
 }
