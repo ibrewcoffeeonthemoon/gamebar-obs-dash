@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Net.WebSockets;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Windows.Networking.Sockets;
 using Windows.UI.Xaml.Media;
 
 namespace OBS_Status.WebSocket
 {
-	public class Client
+	public partial class Client
 	{
 		private static bool isConnected = false;
 
@@ -78,15 +78,48 @@ namespace OBS_Status.WebSocket
 			{
 				// read the message
 				string msg = reader.ReadString(reader.UnconsumedBufferLength);
-				Debug.WriteLine("OBS → " + msg);
 
-				// After receiving "Hello" from OBS, send Identify:
-				//if (msg.Contains("\"op\":0")) // Hello
-				//{
-				//	string identify = "{\"op\":1,\"d\":{\"rpcVersion\":1}}";
-				//	writer.WriteString(identify);
-				//	writer.StoreAsync();
-				//}
+				// Parse the JSON into our generic ObsMessage object
+				Message message = JsonConvert.DeserializeObject<Message>(msg);
+
+				if (message == null)
+				{
+					Debug.WriteLine("Failed to deserialize OBS message.");
+					return;
+				}
+
+				// Safely handle the opcode (using int base for future-proofing)
+				Debug.WriteLine($"Received opcode: {message.Op}");
+
+				switch ((OpCode)message.Op)
+				{
+					case OpCode.Hello:
+						Debug.WriteLine("Received Hello from OBS-WebSocket.");
+						Identify(message.D);
+						break;
+
+					case OpCode.Identified:
+						Debug.WriteLine("Successfully identified with OBS-WebSocket!");
+						// Connection is now ready for requests
+						break;
+
+					case OpCode.Event:
+						string eventType = message.D["eventType"]?.ToString() ?? "Unknown";
+						Debug.WriteLine($"Event received: {eventType}");
+						// Handle specific events if needed
+						break;
+
+					case OpCode.RequestResponse:
+						string requestId = message.D["requestId"]?.ToString();
+						string requestType = message.D["requestType"]?.ToString();
+						string status = message.D["requestStatus"]?["result"]?.ToObject<bool>() ?? false ? "Success" : "Failed";
+						Debug.WriteLine($"Response for {requestType} (ID: {requestId}): {status}");
+						break;
+
+					default:
+						Debug.WriteLine($"Unhandled or future opcode: {message.Op}");
+						break;
+				}
 			}
 		}
 	}
