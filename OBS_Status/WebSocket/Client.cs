@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
 
@@ -7,6 +8,8 @@ namespace OBS_Status.WebSocket
 {
 	public class Client
 	{
+		private static bool isConnected = false;
+
 		private const string ServerAddress = "127.0.0.1";
 		private const string ServerPort = "4455";
 		private MessageWebSocket socket;
@@ -23,6 +26,13 @@ namespace OBS_Status.WebSocket
 
 		public async Task Connect()
 		{
+			// Check if already connected
+			if (isConnected)
+			{
+				Debug.WriteLine("WebSocket is already connected.");
+				return;  // Don't connect again
+			}
+
 			try
 			{
 				// connect to the obs server
@@ -32,6 +42,7 @@ namespace OBS_Status.WebSocket
 
 				// connection establishd
 				Debug.WriteLine("Connected!");
+				isConnected = true;
 			}
 			catch (Exception ex)
 			{
