@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
-using Windows.Storage.Streams;
 
 namespace OBS_Status.WebSocket
 {
@@ -22,7 +21,7 @@ namespace OBS_Status.WebSocket
 			socket.MessageReceived += OnMessageReceive;
 		}
 
-		public async Task ConnectAndSendMessageAsync()
+		public async Task Connect()
 		{
 			try
 			{
