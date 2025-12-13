@@ -16,12 +16,11 @@ namespace OBS_Status
 
 		public WidgetPage()
         {
+            // init UI
             this.InitializeComponent();
             Debug.WriteLine("WidgetPage initialized.");
-
+            // register onLoaded handler
             this.Loaded += OnLoaded;
-
-		    Client.Instance.Initialize(this);
         }
         ~WidgetPage()
         {
@@ -30,6 +29,10 @@ namespace OBS_Status
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
+            // init Client Instance only once onloaded
+		    Client.Instance.Initialize(this);
+            Debug.WriteLine("Client instance initialized");
+            // then connect once 
             await Client.Instance.Connect();
 		}
 	}
