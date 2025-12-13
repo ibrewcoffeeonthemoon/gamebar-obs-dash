@@ -95,7 +95,7 @@ namespace OBS_Status.WebSocket
 				{
 					case OpCode.Hello:
 						Debug.WriteLine("Received Hello from OBS-WebSocket.");
-						HandleHello(message.D);
+						Identify(message.D);
 						break;
 
 					case OpCode.Identified:
