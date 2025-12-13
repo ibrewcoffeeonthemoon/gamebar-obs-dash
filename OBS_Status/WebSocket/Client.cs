@@ -34,6 +34,7 @@ namespace OBS_Status.WebSocket
 			if (IsConnected)
 			{
 				Debug.WriteLine("WebSocket is already connected.");
+				IsConnected = true;
 				return;  // Don't connect again
 			}
 			try
