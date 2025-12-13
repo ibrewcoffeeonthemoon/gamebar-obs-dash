@@ -5,8 +5,6 @@ VisualStudioVersion = 18.1.11304.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBS_Status", "OBS_Status\OBS_Status.csproj", "{94D05A38-04B0-4EA4-AD28-4ADFE4719E84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBSBridge", "OBSBridge\OBSBridge.csproj", "{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -35,18 +33,6 @@ Global
 		{94D05A38-04B0-4EA4-AD28-4ADFE4719E84}.Release|x86.ActiveCfg = Release|x86
 		{94D05A38-04B0-4EA4-AD28-4ADFE4719E84}.Release|x86.Build.0 = Release|x86
 		{94D05A38-04B0-4EA4-AD28-4ADFE4719E84}.Release|x86.Deploy.0 = Release|x86
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Debug|x64.Build.0 = Debug|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Debug|x86.Build.0 = Debug|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Release|ARM64.Build.0 = Release|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Release|x64.ActiveCfg = Release|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Release|x64.Build.0 = Release|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Release|x86.ActiveCfg = Release|Any CPU
-		{2B8AF758-DC25-46E8-8FA7-1F7EC042FE74}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
