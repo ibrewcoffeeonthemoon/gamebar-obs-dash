@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -6,7 +7,7 @@ using Windows.Storage.Streams;
 
 namespace OBS_Status.WebSocket
 {
-    public partial class Client
+    public partial class Client : INotifyPropertyChanged
 	{
 		private async void Identify(JToken helloData)
 		{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -7,10 +8,8 @@ using Windows.UI.Xaml.Media;
 
 namespace OBS_Status.WebSocket
 {
-	public partial class Client
+	public partial class Client : INotifyPropertyChanged
 	{
-		private bool isConnected = false;
-
 		private const string ServerAddress = "127.0.0.1";
 		private const string ServerPort = "4455";
 		private MessageWebSocket socket;
@@ -44,7 +43,7 @@ namespace OBS_Status.WebSocket
 		public async Task Connect()
 		{
 			// Check if already connected
-			if (isConnected)
+			if (IsConnected)
 			{
 				Debug.WriteLine("WebSocket is already connected.");
 				return;  // Don't connect again
@@ -58,7 +57,7 @@ namespace OBS_Status.WebSocket
 
 				// connection establishd
 				Debug.WriteLine("Connected!");
-				isConnected = true;
+				IsConnected = true;
 
 				// change text box color to green
 				//updateColor();
@@ -67,18 +66,6 @@ namespace OBS_Status.WebSocket
 			catch (Exception ex)
 			{
 				Debug.WriteLine("[WebSocket] " + ex.Message);
-			}
-		}
-
-		private void updateColor()
-		{
-			if (isConnected)
-			{
-				Page.StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Green);
-			}
-			else
-			{
-				Page.StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.DarkSlateBlue);
 			}
 		}
 

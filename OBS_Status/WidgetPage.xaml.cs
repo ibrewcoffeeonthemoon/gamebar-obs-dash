@@ -32,8 +32,18 @@ namespace OBS_Status
             // init Client Instance only once onloaded
 		    Client.Instance.Initialize(this);
             Debug.WriteLine("Client instance initialized");
-            // then connect once 
-            await Client.Instance.Connect();
+			// enables automatic updates for ALL bindings in XAML
+			this.DataContext = Client.Instance;
+            //
+            Client.Instance.PropertyChanged += (s, args) =>
+            {
+                if (args.PropertyName == nameof(Client.Instance.IsConnected))
+                {
+                    Debug.WriteLine($"IsConnected changed: {Client.Instance.IsConnected}");
+                }
+            };
+			// then connect once
+			await Client.Instance.Connect();
 		}
 	}
 }
