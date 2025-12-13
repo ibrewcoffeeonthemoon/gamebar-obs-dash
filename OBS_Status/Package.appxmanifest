@@ -54,12 +54,8 @@
                 <PinningSupported>true</PinningSupported>
                 <Window>
                   <Size>
-                    <Height>120</Height>
-                    <Width>150</Width>
-                    <MinHeight>64</MinHeight>
-                    <MinWidth>96</MinWidth>
-                    <MaxHeight>240</MaxHeight>
-                    <MaxWidth>320</MaxWidth>
+                    <MinHeight>50</MinHeight>
+                    <MinWidth>120</MinWidth>
                   </Size>
                   <ResizeSupported>
                     <Horizontal>true</Horizontal>

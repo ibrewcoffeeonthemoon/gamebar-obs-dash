@@ -6,28 +6,24 @@
     xmlns:local="using:OBS_Status"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Width="150"
-    Height="120">
-
-    <Grid>
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Orientation="Vertical">
-			<Button
-                Width="100"
-                Height="40"
-                Background="DodgerBlue"
-                BorderBrush="DarkSlateBlue"
-                BorderThickness="2"
-                CornerRadius="20"
-                Content="--"
-                FontSize="16"
-                Foreground="White" 
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"/>
-		</StackPanel>
-    </Grid>
+    >
+	<Border 
+		Background="DodgerBlue"
+		BorderBrush="DarkSlateBlue"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
+		CornerRadius="25"
+		Padding="5">
+		<!-- Status Text -->
+		<TextBlock 
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Center"
+			TextAlignment="Center"
+			Foreground="White"
+			FontSize="22"
+			FontWeight="ExtraBold"
+			Text="12:34:56"
+			/>
+	</Border>
 </Page>
+
