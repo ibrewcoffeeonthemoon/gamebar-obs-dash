@@ -23,7 +23,6 @@ namespace OBS_Status.WebSocket
 			socket.Control.MessageType = SocketMessageType.Utf8;
 			// register message handler
 			socket.MessageReceived += OnMessageReceive;
-			//updateColor();
 		}
 		// The single instance — created lazily (only when first needed)
 		private static readonly Lazy<Client> _instance = new Lazy<Client>(() => new Client());
@@ -55,14 +54,6 @@ namespace OBS_Status.WebSocket
 				string endpoint = $"ws://{ServerAddress}:{ServerPort}";
 				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
 				await socket.ConnectAsync(new Uri(endpoint));
-
-				// connection establishd
-				Debug.WriteLine("Connected!");
-				isConnected = true;
-
-				// change text box color to green
-				//updateColor();
-
 			}
 			catch (Exception ex)
 			{
