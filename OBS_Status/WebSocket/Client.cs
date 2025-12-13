@@ -44,14 +44,6 @@ namespace OBS_Status.WebSocket
 				string endpoint = $"ws://{ServerAddress}:{ServerPort}";
 				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
 				await socket.ConnectAsync(new Uri(endpoint));
-
-				// connection establishd
-				Debug.WriteLine("Connected!");
-				IsConnected = true;
-
-				// change text box color to green
-				//updateColor();
-
 			}
 			catch (Exception ex)
 			{
