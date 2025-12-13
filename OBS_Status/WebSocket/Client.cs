@@ -10,28 +10,29 @@ namespace OBS_Status.WebSocket
 	{
 		private const string ServerAddress = "127.0.0.1";
 		private const string ServerPort = "4455";
-		private MessageWebSocket ws;
-		private DataWriter writer;
+		private MessageWebSocket socket;
+
+		public Client()
+		{
+			// create the websocket
+			socket = new MessageWebSocket();
+			socket.Control.MessageType = SocketMessageType.Utf8;
+
+			// register message handler
+			socket.MessageReceived += OnMessageReceive;
+		}
 
 		public async Task ConnectAndSendMessageAsync()
 		{
 			try
 			{
-				// create the websocket
-				ws = new MessageWebSocket();
-				ws.Control.MessageType = SocketMessageType.Utf8;
-
-				// register message handler
-				ws.MessageReceived += OnMessageReceive;
-
 				// connect to the obs server
 				string endpoint = $"ws://{ServerAddress}:{ServerPort}";
 				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
-				await ws.ConnectAsync(new Uri(endpoint));
+				await socket.ConnectAsync(new Uri(endpoint));
 
 				// connection establishd
 				Debug.WriteLine("Connected!");
-				writer = new DataWriter(ws.OutputStream);
 			}
 			catch (Exception ex)
 			{

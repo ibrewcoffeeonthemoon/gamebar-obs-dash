@@ -13,7 +13,7 @@ namespace OBS_Status
     /// </summary>
     public sealed partial class WidgetPage : Page
     {
-		Client ws = new Client();
+		Client client = new Client();
 
         public WidgetPage()
         {
@@ -26,7 +26,7 @@ namespace OBS_Status
         }
 		private async void MyButton_Click(object sender, RoutedEventArgs e)
         {
-			await ws.ConnectAndSendMessageAsync();
+			await client.ConnectAndSendMessageAsync();
 		}
 	}
 }
