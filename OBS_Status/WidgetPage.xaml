@@ -7,9 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
+	<Page.Resources>
+		<local:BoolToColorConverter x:Key="BoolToColorConverter"/>
+	</Page.Resources>
 	<Border 
-		x:Name="statusBorder"
-		Background="DodgerBlue"
+		Background="{Binding IsConnected, Converter={StaticResource BoolToColorConverter}}"
 		BorderBrush="DarkSlateBlue"
 		HorizontalAlignment="Stretch"
 		VerticalAlignment="Stretch"

@@ -1,7 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using OBS_Status.WebSocket;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Media;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -12,8 +16,6 @@ namespace OBS_Status
     /// </summary>
     public sealed partial class WidgetPage : Page
     {
-		public Border StatusBorder => statusBorder;
-
 		public WidgetPage()
         {
             // init UI
@@ -43,6 +45,25 @@ namespace OBS_Status
             };
 			// then connect once
 			await Client.Instance.Connect();
+		}
+	}
+
+	public class BoolToColorConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			if (value is bool isConnected && isConnected)
+			{
+                Debug.WriteLine(value);
+				return new SolidColorBrush(Colors.LightGreen);
+			}
+
+			return new SolidColorBrush(Colors.DarkSlateBlue);
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
