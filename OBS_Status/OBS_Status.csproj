@@ -104,7 +104,7 @@
     </Compile>
     <Compile Include="WebSocket\Client.Timer.cs" />
     <Compile Include="WebSocket\Client.State.cs" />
-    <Compile Include="WebSocket\Client.HandleHello.cs" />
+    <Compile Include="WebSocket\Client.Login.cs" />
     <Compile Include="WebSocket\Message.cs" />
     <Compile Include="WebSocket\Client.cs" />
     <Compile Include="MainPage.xaml.cs">
