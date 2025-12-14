@@ -35,9 +35,8 @@ namespace OBS_Status.WebSocket
 			}
 		}
 
-		private const string ServerAddress = "127.0.0.1";
-		private const string ServerPort = "4455";
 		private string password = File.ReadAllText(Path.Combine(System.AppContext.BaseDirectory, ".password"));
+		private string endpoint = File.ReadAllText(Path.Combine(System.AppContext.BaseDirectory, ".endpoint"));
 
 		public async Task Connect()
 		{
@@ -51,7 +50,6 @@ namespace OBS_Status.WebSocket
 			try
 			{
 				// connect to the obs server
-				string endpoint = $"ws://{ServerAddress}:{ServerPort}";
 				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
 				await socket.ConnectAsync(new Uri(endpoint));
 			}
