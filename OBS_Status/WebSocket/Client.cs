@@ -8,8 +8,6 @@ namespace OBS_Status.WebSocket
 {
 	public partial class Client
 	{
-		private const string ServerAddress = "127.0.0.1";
-		private const string ServerPort = "4455";
 		public WidgetPage Page { get; set; }
 
 		// Private constructor — no one can create new Client() from outside

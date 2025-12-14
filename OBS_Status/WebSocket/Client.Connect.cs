@@ -35,6 +35,8 @@ namespace OBS_Status.WebSocket
 			}
 		}
 
+		private const string ServerAddress = "127.0.0.1";
+		private const string ServerPort = "4455";
 		private string password = File.ReadAllText(Path.Combine(System.AppContext.BaseDirectory, ".password"));
 
 		public async Task Connect()
