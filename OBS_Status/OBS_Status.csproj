@@ -102,7 +102,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WebSocket\Client.Timer.cs" />
+    <Compile Include="WebSocket\Client.Status.cs" />
     <Compile Include="WebSocket\Client.State.cs" />
     <Compile Include="WebSocket\Client.Login.cs" />
     <Compile Include="WebSocket\Message.cs" />
