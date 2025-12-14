@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Windows.UI;
@@ -35,6 +36,28 @@ namespace OBS_Status.WebSocket
 		}
 
 		private string password = File.ReadAllText(Path.Combine(System.AppContext.BaseDirectory, ".password"));
+
+		public async Task Connect()
+		{
+			// Check if already connected
+			if (IsConnected)
+			{
+				Debug.WriteLine("WebSocket is already connected.");
+				IsConnected = true;
+				return;  // Don't connect again
+			}
+			try
+			{
+				// connect to the obs server
+				string endpoint = $"ws://{ServerAddress}:{ServerPort}";
+				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
+				await socket.ConnectAsync(new Uri(endpoint));
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine("[WebSocket] " + ex.Message);
+			}
+		}
 
 		private async void Identify(JToken helloData)
 		{

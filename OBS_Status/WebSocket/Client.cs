@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
@@ -29,27 +28,6 @@ namespace OBS_Status.WebSocket
 		public static Client Instance => _instance.Value;
 		// This will hold the reference to your WidgetPage (or just the dispatcher)
 
-		public async Task Connect()
-		{
-			// Check if already connected
-			if (IsConnected)
-			{
-				Debug.WriteLine("WebSocket is already connected.");
-				IsConnected = true;
-				return;  // Don't connect again
-			}
-			try
-			{
-				// connect to the obs server
-				string endpoint = $"ws://{ServerAddress}:{ServerPort}";
-				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
-				await socket.ConnectAsync(new Uri(endpoint));
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine("[WebSocket] " + ex.Message);
-			}
-		}
 
 		private void OnMessageReceive(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args)
 		{
