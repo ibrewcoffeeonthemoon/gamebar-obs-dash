@@ -3,12 +3,36 @@ using System.Diagnostics;
 using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Xaml.Media;
+
 
 namespace OBS_Status.WebSocket
 {
 	public partial class Client
 	{
+		// state
+		private bool _isRecording;
+		public bool IsRecording
+		{
+			get => _isRecording;
+			set
+			{
+				// update internal state
+				_isRecording = value;
+
+				// Only update recording state color if already connected
+				if (IsConnected)
+				{
+					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+					{
+						Page.StatusBorder.Background = new SolidColorBrush(value ? Colors.Red : Colors.DarkGreen);
+					});
+				}
+			}
+		}
+
 		private string _recordingTimecode = "00:00:00";
 		public string RecordingTimecode
 		{

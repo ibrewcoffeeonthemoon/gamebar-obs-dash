@@ -1,17 +1,65 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Windows.Storage.Streams;
+using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Media;
 
 namespace OBS_Status.WebSocket
 {
     public partial class Client
 	{
+		// State
+		private bool _isConnected;
+		public bool IsConnected
+		{
+			get => _isConnected;
+			set
+			{
+				// update internal state
+				_isConnected = value;
+
+				// Manual, safe UI update using stored page reference 
+				Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+				{
+					Page.StatusBorder.Background = new SolidColorBrush(value ? Colors.DarkGreen : Colors.DarkSlateBlue);
+					// Add more if you have text or dot:
+					// Page.statusTextBlock.Text = value ? "Connected" : "Disconnected";
+					// Page.statusDot.Fill = new SolidColorBrush(value ? Colors.LightGreen : Colors.DarkSlateBlue);
+				});
+			}
+		}
+
+		private const string ServerAddress = "127.0.0.1";
+		private const string ServerPort = "4455";
 		private string password = File.ReadAllText(Path.Combine(System.AppContext.BaseDirectory, ".password"));
+
+		public async Task Connect()
+		{
+			// Check if already connected
+			if (IsConnected)
+			{
+				Debug.WriteLine("WebSocket is already connected.");
+				IsConnected = true;
+				return;  // Don't connect again
+			}
+			try
+			{
+				// connect to the obs server
+				string endpoint = $"ws://{ServerAddress}:{ServerPort}";
+				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
+				await socket.ConnectAsync(new Uri(endpoint));
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine("[WebSocket] " + ex.Message);
+			}
+		}
 
 		private async void Identify(JToken helloData)
 		{
