@@ -69,7 +69,7 @@ namespace OBS_Status.WebSocket
 						Debug.WriteLine($"Response for {requestType} (ID: {requestId}): {status}");
 
 						// handle specific request responses
-						if (requestType == "GetRecordStatus" && requestSuccess)
+						if (requestSuccess && requestType == "GetRecordStatus")
 						{
 							// Extract the timecode (e.g., "00:01:23.456")
 							string timecode = message.D["responseData"]?["outputTimecode"]?.ToString() ?? "00:00:00";
