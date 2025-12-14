@@ -17,8 +17,8 @@ namespace OBS_Status.WebSocket
 		{
 			var identifyD = new JObject
 			{
-				["rpcVersion"] = 1
-				// ["eventSubscriptions"] = ... // optional, add if you want events
+				["rpcVersion"] = 1,
+				["eventSubscriptions"] = (int)EventSubscription.Outputs  // For recording status
 			};
 
 			// Check if authentication is required
