@@ -36,7 +36,8 @@ namespace OBS_Status.WebSocket
 				// update internal state
 				_isRecording = value;
 
-				// Only update recording state color if already connected if (IsConnected)
+				// Only update recording state color if already connected
+				if (IsConnected)
 				{
 					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
 					{
