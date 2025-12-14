@@ -82,8 +82,7 @@ namespace OBS_Status.WebSocket
 							string formattedTime = ts.ToString(@"hh\:mm\:ss");
 							Debug.WriteLine($"Raw timecode: {timecode}, Formatted timecode: {formattedTime}");
 							// Update the recording timer text
-							Client.Instance.RecordingTimecode = formattedTime;
-
+							RecordingTimecode = formattedTime;
 							Debug.WriteLine($"Recording timer updated: {timecode}");
 						}
 						break;
