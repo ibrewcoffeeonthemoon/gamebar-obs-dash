@@ -86,6 +86,12 @@ namespace OBS_Status.WebSocket
 						string eventType = message.D["eventType"]?.ToString() ?? "Unknown";
 						Debug.WriteLine($"Event received: {eventType}");
 						// Handle specific events if needed
+						// - RecordStateChanged
+						if (eventType == "RecordStateChanged")
+						{
+							// The actual recording state is in eventData.outputActive (true/false)
+							IsRecording = message.D["eventData"]?["outputActive"]?.ToObject<bool>() ?? false;
+						}
 						break;
 
 					case OpCode.RequestResponse:
