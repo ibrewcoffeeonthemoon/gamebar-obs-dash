@@ -68,12 +68,7 @@ namespace OBS_Status.WebSocket
 			Debug.WriteLine("Sending Identify → " + jsonToSend);
 
 			// Send it over the WebSocket
-			using (var writer = new DataWriter(socket.OutputStream))
-			{
-				writer.WriteString(jsonToSend);
-				await writer.StoreAsync().AsTask();
-				await writer.FlushAsync().AsTask();
-			}
+			SendMessageAsync(jsonToSend).Wait();
 
 			Debug.WriteLine("Identify message sent. Waiting for 'Identified'...");
 		}
