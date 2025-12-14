@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
+using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Windows.Storage.Streams;
@@ -8,19 +11,56 @@ namespace OBS_Status.WebSocket
 {
     public partial class Client
 	{
+		private string password = File.ReadAllText(Path.Combine(System.AppContext.BaseDirectory, ".password"));
+
 		private async void Identify(JToken helloData)
 		{
+			var identifyD = new JObject
+			{
+				["rpcVersion"] = 1
+				// ["eventSubscriptions"] = ... // optional, add if you want events
+			};
+
+			// Check if authentication is required
+			var authObject = helloData["authentication"];
+			if (authObject != null)
+			{
+				string salt = authObject["salt"]?.ToString();
+				string challenge = authObject["challenge"]?.ToString();
+
+				if (string.IsNullOrEmpty(salt) || string.IsNullOrEmpty(challenge))
+				{
+					Debug.WriteLine("Authentication required but missing salt/challenge!");
+					// Handle error (close connection, etc.)
+					return;
+				}
+
+				// Step 1: secret = base64( SHA256( password + salt ) )
+				string secretString = password + salt;
+				byte[] secretBytes = Encoding.UTF8.GetBytes(secretString);
+				byte[] secretHash = SHA256.Create().ComputeHash(secretBytes);
+				string base64Secret = Convert.ToBase64String(secretHash);
+
+				// Step 2: auth = base64( SHA256( base64Secret + challenge ) )
+				string authInput = base64Secret + challenge;
+				byte[] authBytes = Encoding.UTF8.GetBytes(authInput);
+				byte[] authHash = SHA256.Create().ComputeHash(authBytes);
+				string authenticationString = Convert.ToBase64String(authHash);
+
+				// Add to Identify payload
+				identifyD["authentication"] = authenticationString;
+				Debug.WriteLine("Authentication computed and added.");
+			}
+			else
+			{
+				Debug.WriteLine("No authentication required.");
+			}
+
 			// Build the full Identify message
 			var identifyMessage = new Message
 			{
 				Op = (int)OpCode.Identify,
-				// Build the "d" payload for Identify
-				D = new JObject
-				{
-					["rpcVersion"] = 1,  // Always use 1 (current as of OBS-WebSocket 5.x)
-					//["eventsubscriptions"] = (int)eventsubscriptions  // optional but highly recommended
-																	   //No "authentication" field needed since no password
-				}
+				D = identifyD
 			};
 
 			// Serialize to JSON
@@ -30,7 +70,6 @@ namespace OBS_Status.WebSocket
 			// Send it over the WebSocket
 			using (var writer = new DataWriter(socket.OutputStream))
 			{
-				writer.UnicodeEncoding = UnicodeEncoding.Utf8;
 				writer.WriteString(jsonToSend);
 				await writer.StoreAsync().AsTask();
 				await writer.FlushAsync().AsTask();
