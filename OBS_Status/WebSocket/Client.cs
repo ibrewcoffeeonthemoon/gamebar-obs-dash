@@ -6,6 +6,12 @@ namespace OBS_Status.WebSocket
 {
 	public partial class Client
 	{
+        // The single instance — created lazily (only when first needed)
+        private static readonly Lazy<Client> _instance = new Lazy<Client>(() => new Client());
+		// Public way to access the single instance
+		public static Client Instance => _instance.Value;
+
+		// This will hold the reference to your WidgetPage (or just the dispatcher)
 		public WidgetPage Page { get; set; }
 
 		// Private constructor — no one can create new Client() from outside
@@ -18,11 +24,6 @@ namespace OBS_Status.WebSocket
 			// register message handler
 			socket.MessageReceived += OnMessageReceive;
 		}
-        // The single instance — created lazily (only when first needed)
-        private static readonly Lazy<Client> _instance = new Lazy<Client>(() => new Client());
-		// Public way to access the single instance
-		public static Client Instance => _instance.Value;
-		// This will hold the reference to your WidgetPage (or just the dispatcher)
 	}
 }
 
