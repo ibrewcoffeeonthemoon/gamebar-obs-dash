@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
 
 namespace OBS_Status.WebSocket
 {
@@ -11,6 +12,7 @@ namespace OBS_Status.WebSocket
 		private const string ServerAddress = "127.0.0.1";
 		private const string ServerPort = "4455";
 		private MessageWebSocket socket;
+		private DataWriter writer;
 		public WidgetPage Page { get; set; }
 
 		// Private constructor — no one can create new Client() from outside
@@ -18,15 +20,35 @@ namespace OBS_Status.WebSocket
 		{
 			// create the websocket
 			socket = new MessageWebSocket();
+			writer = new DataWriter(socket.OutputStream);
 			socket.Control.MessageType = SocketMessageType.Utf8;
 			// register message handler
 			socket.MessageReceived += OnMessageReceive;
 		}
-		// The single instance — created lazily (only when first needed)
-		private static readonly Lazy<Client> _instance = new Lazy<Client>(() => new Client());
+        // The single instance — created lazily (only when first needed)
+        private static readonly Lazy<Client> _instance = new Lazy<Client>(() => new Client());
 		// Public way to access the single instance
 		public static Client Instance => _instance.Value;
 		// This will hold the reference to your WidgetPage (or just the dispatcher)
+
+		private async Task SendMessageAsync(string message)
+		{
+			try
+			{
+				// Prepare the message to send
+				writer.WriteString(message);
+				await writer.StoreAsync();  // Asynchronously send the message
+				await writer.FlushAsync();  // Ensure the message is fully sent
+			}
+			catch (ObjectDisposedException ex)
+			{
+				Debug.WriteLine("Error: Attempted to send on a closed WebSocket: " + ex.Message);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine("Error while sending message: " + ex.Message);
+			}
+		}
 
 		public async Task Connect()
 		{
