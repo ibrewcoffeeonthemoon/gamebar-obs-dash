@@ -113,6 +113,16 @@ namespace OBS_Status.WebSocket
 						{
 							// The actual recording state is in eventData.outputActive (true/false)
 							IsRecording = message.D["eventData"]?["outputActive"]?.ToObject<bool>() ?? false;
+
+							// Also start recording timer polling
+							if (IsRecording)
+							{
+								StartRecordingTimerPolling();
+							}
+							else
+							{
+								StopRecordingTimerPolling();
+							}
 						}
 						break;
 
