@@ -18,13 +18,15 @@
 		Padding="5">
 		<!-- Status Text -->
 		<TextBlock 
+			x:Name="RecordingTimerText"
+			x:FieldModifier="public"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Center"
 			TextAlignment="Center"
 			Foreground="White"
 			FontSize="22"
 			FontWeight="ExtraBold"
-			Text="12:34:56"
+			Text="00:00:00"
 			/>
 	</Border>
 </Page>

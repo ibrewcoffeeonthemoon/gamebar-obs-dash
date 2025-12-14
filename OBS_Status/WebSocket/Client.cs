@@ -113,14 +113,44 @@ namespace OBS_Status.WebSocket
 						{
 							// The actual recording state is in eventData.outputActive (true/false)
 							IsRecording = message.D["eventData"]?["outputActive"]?.ToObject<bool>() ?? false;
+
+							// Also start recording timer polling
+							if (IsRecording)
+							{
+								StartRecordingTimerPolling();
+							}
+							else
+							{
+								StopRecordingTimerPolling();
+							}
 						}
 						break;
 
 					case OpCode.RequestResponse:
 						string requestId = message.D["requestId"]?.ToString();
 						string requestType = message.D["requestType"]?.ToString();
-						string status = message.D["requestStatus"]?["result"]?.ToObject<bool>() ?? false ? "Success" : "Failed";
+						bool requestSuccess = message.D["requestStatus"]?["result"]?.ToObject<bool>() ?? false;
+						string status = requestSuccess ? "Success" : "Failed";
 						Debug.WriteLine($"Response for {requestType} (ID: {requestId}): {status}");
+
+						// handle specific request responses
+						if (requestType == "GetRecordStatus" && requestSuccess)
+						{
+							// Extract the timecode (e.g., "00:01:23.456")
+							string timecode = message.D["responseData"]?["outputTimecode"]?.ToString() ?? "00:00:00";
+							// Extract the duration in milliseconds for accurate rounding
+							long durationMs = message.D["responseData"]?["outputDuration"]?.ToObject<long>() ?? 0;
+							// Round to nearest second
+							long roundedSeconds = (durationMs + 500) / 1000;  // +500 for proper rounding
+							// Convert to TimeSpan and format without milliseconds
+							TimeSpan ts = TimeSpan.FromSeconds(roundedSeconds);
+							string formattedTime = ts.ToString(@"hh\:mm\:ss");
+							Debug.WriteLine($"Raw timecode: {timecode}, Formatted timecode: {formattedTime}");
+							// Update the recording timer text
+							Client.Instance.RecordingTimecode = formattedTime;
+
+							Debug.WriteLine($"Recording timer updated: {timecode}");
+						}
 						break;
 
 					default:
