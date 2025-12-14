@@ -102,6 +102,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WebSocket\Client.Response.cs" />
     <Compile Include="WebSocket\Client.Socket.cs" />
     <Compile Include="WebSocket\Client.Status.cs" />
     <Compile Include="WebSocket\Client.Connect.cs" />
