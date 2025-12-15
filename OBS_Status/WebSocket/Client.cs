@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace OBS_Status.WebSocket
 {
@@ -15,6 +17,26 @@ namespace OBS_Status.WebSocket
 		// Private constructor — no one can create new Client() from outside
 		private Client()
 		{
+		}
+
+		// heartbeat loop
+		private readonly int heartbeatInterval = 1000; // in milliseconds
+		public async Task Run()
+		{
+			while (true)
+			{
+				// if not connected, try to connect
+				Debug.WriteLine("if not connected, try to connect first");
+				//if (!IsConnected)
+				//{
+				//	await Connect();
+				//}
+				// if already connected and is recording, send GetRecordStatus request
+				// if any exception, set IsConnected = false
+
+				// delay interval
+				await Task.Delay(heartbeatInterval);
+			}
 		}
 	}
 }
