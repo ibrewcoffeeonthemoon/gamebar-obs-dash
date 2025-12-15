@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Media;
@@ -49,6 +51,12 @@ namespace OBS_Status.WebSocket
 			}
 			try
 			{
+				// create the websocket
+				socket = new MessageWebSocket();
+				writer = new DataWriter(socket.OutputStream);
+				socket.Control.MessageType = SocketMessageType.Utf8;
+				// register message handler
+				socket.MessageReceived += OnMessageReceive;
 				// connect to the obs server
 				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
 				await socket.ConnectAsync(new Uri(endpoint));

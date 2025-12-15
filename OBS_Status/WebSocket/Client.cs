@@ -1,6 +1,4 @@
 ﻿using System;
-using Windows.Networking.Sockets;
-using Windows.Storage.Streams;
 
 namespace OBS_Status.WebSocket
 {
@@ -17,12 +15,6 @@ namespace OBS_Status.WebSocket
 		// Private constructor — no one can create new Client() from outside
 		private Client()
 		{
-			// create the websocket
-			socket = new MessageWebSocket();
-			writer = new DataWriter(socket.OutputStream);
-			socket.Control.MessageType = SocketMessageType.Utf8;
-			// register message handler
-			socket.MessageReceived += OnMessageReceive;
 		}
 	}
 }
