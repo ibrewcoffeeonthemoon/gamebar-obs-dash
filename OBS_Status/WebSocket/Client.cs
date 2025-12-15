@@ -20,22 +20,26 @@ namespace OBS_Status.WebSocket
 		}
 
 		// heartbeat loop
-		private readonly int heartbeatInterval = 1000; // in milliseconds
 		public async Task Run()
 		{
 			while (true)
 			{
-				// if not connected, try to connect
-				Debug.WriteLine("if not connected, try to connect first");
-				//if (!IsConnected)
-				//{
-				//	await Connect();
-				//}
-				// if already connected and is recording, send GetRecordStatus request
-				// if any exception, set IsConnected = false
-
-				// delay interval
-				await Task.Delay(heartbeatInterval);
+				// if not connected, try to connect first
+				if (!IsConnected)
+				{
+					await Connect();
+				}
+				// if connected but not recording, just send ping to check connection
+				else if (!IsRecording)
+				{
+					Debug.WriteLine("connected, not recording, keep sending ping");
+				}
+				else
+				{
+					Debug.WriteLine("if already connected and is recording, send GetRecordStatus request");
+				}
+				// delay for 1 second before next iteration
+				await Task.Delay(1000);
 			}
 		}
 	}
