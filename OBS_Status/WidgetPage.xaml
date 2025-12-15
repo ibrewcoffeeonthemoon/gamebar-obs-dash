@@ -10,7 +10,7 @@
 	<Border 
 		x:Name="StatusBorder"
 		x:FieldModifier="public"
-		Background="DodgerBlue"
+		Background="DimGray"
 		BorderBrush="DarkSlateBlue"
 		HorizontalAlignment="Stretch"
 		VerticalAlignment="Stretch"
