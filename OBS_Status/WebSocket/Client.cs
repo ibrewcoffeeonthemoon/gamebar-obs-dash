@@ -32,7 +32,7 @@ namespace OBS_Status.WebSocket
 				// if connected but not recording, just send ping to check connection
 				else if (!IsRecording)
 				{
-					Debug.WriteLine("connected, not recording, keep sending ping");
+					await Ping();
 				}
 				else
 				{
