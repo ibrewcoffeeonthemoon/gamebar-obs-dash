@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
+using Windows.Gaming.UI;
 
 namespace OBS_Status
 {
@@ -24,7 +25,13 @@ namespace OBS_Status
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-        }
+
+			// detect and propagate Game Bar visibility changes to other parts of the app, e.g. WidgetPage
+			GameBar.VisibilityChanged += (s, e) =>
+            {
+                GamebarVisibilityChangedEvent.RaiseGamebarVisibilityChanged(GameBar.Visible);
+            };
+		}
 
         protected override void OnActivated(IActivatedEventArgs args)
         {

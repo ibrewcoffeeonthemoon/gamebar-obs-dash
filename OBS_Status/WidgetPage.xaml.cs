@@ -1,5 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Xml.Schema;
+using Microsoft.Gaming.XboxGameBar;
 using OBS_Status.WebSocket;
+using Windows.Gaming.UI;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -24,21 +28,10 @@ namespace OBS_Status
             Debug.WriteLine("WidgetPage initialized.");
             // register onloaded handler
             this.Loaded += OnLoaded;
-            //
-            Window.Current.Activated += (object s, WindowActivatedEventArgs e) =>
-            {
-                Debug.WriteLine($"Window.Current.Visible={Window.Current.Visible}");
-                if (Window.Current.Visible)
-                {
-                    Debug.WriteLine("ENTER: WidgetPage window visible.");
-                }
-                else
-                {
-                    Debug.WriteLine("EXIT: WidgetPage window invisible.");
-                }
-            };
-            // store reference to this page in Client singleton
-            Client.Instance.Page = this; 
+            // register window activated handler
+            GamebarVisibilityChangedEvent.VisibilityChanged += OnGamebarVisibilityChanged;
+			// store reference to this page in Client singleton
+			Client.Instance.Page = this; 
 		}
         ~WidgetPage()
         {
@@ -47,10 +40,21 @@ namespace OBS_Status
 
 		private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await Client.Instance.Run();
+            //await Client.Instance.Run();
 		}
 
-        public async void UpdateColor()
+        private void OnGamebarVisibilityChanged(bool isVisible)
+        {
+            Debug.WriteLine($"WidgetPage detected: Gamebar visibility changed, Visible={isVisible}");
+			// gonna toggle the extended ui of the widget based on gamebar visibility
+			_ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			{
+				RecordingTimerText.Text = isVisible ? "LONG" : "SHORT";
+			});
+
+		}
+
+		public async void UpdateColor()
         {
 			_ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
 			{
