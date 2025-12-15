@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 
+
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace OBS_Status
@@ -23,6 +24,19 @@ namespace OBS_Status
             Debug.WriteLine("WidgetPage initialized.");
             // register onloaded handler
             this.Loaded += OnLoaded;
+            //
+            Window.Current.Activated += (object s, WindowActivatedEventArgs e) =>
+            {
+                Debug.WriteLine($"Window.Current.Visible={Window.Current.Visible}");
+                if (Window.Current.Visible)
+                {
+                    Debug.WriteLine("ENTER: WidgetPage window visible.");
+                }
+                else
+                {
+                    Debug.WriteLine("EXIT: WidgetPage window invisible.");
+                }
+            };
             // store reference to this page in Client singleton
             Client.Instance.Page = this; 
 		}
@@ -31,7 +45,7 @@ namespace OBS_Status
             Debug.WriteLine("WidgetPage destroyed.");
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs e)
+		private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             await Client.Instance.Run();
 		}
