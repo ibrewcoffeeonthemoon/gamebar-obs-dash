@@ -1,7 +1,11 @@
 ﻿using System.Diagnostics;
 using OBS_Status.WebSocket;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -31,5 +35,28 @@ namespace OBS_Status
         {
             await Client.Instance.Run();
 		}
+
+        public async void UpdateColor()
+        {
+			_ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			{
+                if (!Client.Instance.IsConnected)
+                {
+					StatusBorder.Background = new SolidColorBrush(Colors.DimGray);
+                    return;
+                }
+                else if (!Client.Instance.IsRecording)
+                {
+					StatusBorder.Background = new SolidColorBrush(Colors.DarkGreen);
+                    return;
+				}
+                else
+                {
+					StatusBorder.Background = new SolidColorBrush(Colors.Red);
+                    return;
+                }
+			});
+
+        }
 	}
 }

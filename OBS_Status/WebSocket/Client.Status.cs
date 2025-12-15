@@ -3,9 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Xaml.Media;
 
 
 namespace OBS_Status.WebSocket
@@ -21,15 +19,8 @@ namespace OBS_Status.WebSocket
 			{
 				// update internal state
 				_isRecording = value;
-
-				// Only update recording state color if already connected
-				if (IsConnected)
-				{
-					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-					{
-						Page.StatusBorder.Background = new SolidColorBrush(value ? Colors.Red : Colors.DarkGreen);
-					});
-				}
+				// then call widget page to update color
+				Page?.UpdateColor();
 			}
 		}
 

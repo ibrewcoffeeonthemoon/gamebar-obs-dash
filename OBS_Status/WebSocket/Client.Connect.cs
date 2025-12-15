@@ -8,9 +8,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
-using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.Xaml.Media;
 
 namespace OBS_Status.WebSocket
 {
@@ -25,15 +22,8 @@ namespace OBS_Status.WebSocket
 			{
 				// update internal state
 				_isConnected = value;
-
-				// Manual, safe UI update using stored page reference 
-				Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-				{
-					Page.StatusBorder.Background = new SolidColorBrush(value ? Colors.DarkGreen : Colors.DimGray);
-					// Add more if you have text or dot:
-					// Page.statusTextBlock.Text = value ? "Connected" : "Disconnected";
-					// Page.statusDot.Fill = new SolidColorBrush(value ? Colors.LightGreen : Colors.DarkSlateBlue);
-				});
+				// then call widget page to update color
+				Page?.UpdateColor();
 			}
 		}
 
