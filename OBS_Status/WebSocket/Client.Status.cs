@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Windows.UI;
@@ -53,51 +53,34 @@ namespace OBS_Status.WebSocket
 			}
 		}
 
-		private Timer recordingTimer;
-		private async void StartRecordingTimerPolling()
+		private async Task RequestGetRecordStatus()
 		{
-			// stop any existing timer
-			StopRecordingTimerPolling();
-
-			// start a new timer to poll every second
-			recordingTimer = new Timer(async _ =>
+			// Build the GetRecordStatus request
+			//string requestId = Guid.NewGuid().ToString();
+			string requestId = "f819dcf0-89cc-11eb-8f0e-382c4ac93b9c";
+			var requestData = new JObject();  // No parameters needed for GetRecordStatus
+			var d = new JObject
 			{
-				Debug.WriteLine(socket.Information.ToString());
-				
-				// Build the GetRecordStatus request
-				//string requestId = Guid.NewGuid().ToString();
-				string requestId = "f819dcf0-89cc-11eb-8f0e-382c4ac93b9c";
-				var requestData = new JObject();  // No parameters needed for GetRecordStatus
-				var d = new JObject
-				{
-					["requestType"] = "GetRecordStatus",
-					["requestId"] = requestId,
-					["requestData"] = requestData
-				};
-				var message = new Message
-				{
-					Op = (int)OpCode.Request,
-					D = d
-				};
-				string jsonToSend = JsonConvert.SerializeObject(message);
+				["requestType"] = "GetRecordStatus",
+				["requestId"] = requestId,
+				["requestData"] = requestData
+			};
+			var message = new Message
+			{
+				Op = (int)OpCode.Request,
+				D = d
+			};
+			string jsonToSend = JsonConvert.SerializeObject(message);
 
-				// Send it over the WebSocket
-				try
-				{
-					await SendMessageAsync(jsonToSend);
-				}
-				catch (Exception ex)
-				{
-					Debug.WriteLine($"Failed to send GetRecordStatus: {ex.Message}");
-					// Optionally stop polling on error
-				}
-			}, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
-		}
-
-		private void StopRecordingTimerPolling()
-		{
-			recordingTimer?.Dispose();
-			recordingTimer = null;
+			// Send it over the WebSocket
+			try
+			{
+				await SendMessageAsync(jsonToSend);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Failed to send GetRecordStatus: {ex.Message}");
+			}
 		}
 	}
 }

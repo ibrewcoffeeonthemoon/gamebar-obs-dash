@@ -36,7 +36,7 @@ namespace OBS_Status.WebSocket
 				}
 				else
 				{
-					Debug.WriteLine("if already connected and is recording, send GetRecordStatus request");
+					await RequestGetRecordStatus();
 				}
 				// delay for 1 second before next iteration
 				await Task.Delay(1000);
