@@ -45,7 +45,6 @@ namespace OBS_Status.WebSocket
 				}
 			};
 			string jsonToSend = JsonConvert.SerializeObject(message);
-			Debug.WriteLine(jsonToSend);
 			// Send the Ping/Identify message
 			await SendMessageAsync(jsonToSend);
 		}
