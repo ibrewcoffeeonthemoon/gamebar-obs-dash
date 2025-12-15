@@ -29,7 +29,7 @@ namespace OBS_Status
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await Client.Instance.Connect();
+            await Client.Instance.Run();
 		}
 	}
 }

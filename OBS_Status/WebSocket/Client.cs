@@ -1,6 +1,6 @@
 ﻿using System;
-using Windows.Networking.Sockets;
-using Windows.Storage.Streams;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace OBS_Status.WebSocket
 {
@@ -17,12 +17,30 @@ namespace OBS_Status.WebSocket
 		// Private constructor — no one can create new Client() from outside
 		private Client()
 		{
-			// create the websocket
-			socket = new MessageWebSocket();
-			writer = new DataWriter(socket.OutputStream);
-			socket.Control.MessageType = SocketMessageType.Utf8;
-			// register message handler
-			socket.MessageReceived += OnMessageReceive;
+		}
+
+		// heartbeat loop
+		public async Task Run()
+		{
+			while (true)
+			{
+				// if not connected, try to connect first
+				if (!IsConnected)
+				{
+					await Connect();
+				}
+				// if connected but not recording, just send ping to check connection
+				else if (!IsRecording)
+				{
+					await Ping();
+				}
+				else
+				{
+					await RequestGetRecordStatus();
+				}
+				// delay for 1 second before next iteration
+				await Task.Delay(1000);
+			}
 		}
 	}
 }
