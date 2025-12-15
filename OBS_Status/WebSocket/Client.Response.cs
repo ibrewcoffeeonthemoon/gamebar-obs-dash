@@ -61,6 +61,9 @@ namespace OBS_Status.WebSocket
 						// handle specific request responses
 						if (requestSuccess && requestType == "GetRecordStatus")
 						{
+							Debug.WriteLine(message.D.ToString());
+							// Update recording state
+							IsRecording = message.D["responseData"]?["outputActive"]?.ToObject<bool>() ?? false;
 							// Extract the timecode (e.g., "00:01:23.456")
 							string timecode = message.D["responseData"]?["outputTimecode"]?.ToString() ?? "00:00:00";
 							// Extract the duration in milliseconds for accurate rounding
