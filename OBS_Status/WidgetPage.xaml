@@ -10,12 +10,12 @@
 	<Button 
 		x:Name="StatusButton"
 		x:FieldModifier="public"
-		HorizontalAlignment="Right"
+		HorizontalAlignment="Stretch"
 		VerticalAlignment="Stretch"
 		HorizontalContentAlignment="Stretch"
 		VerticalContentAlignment="Center"
 		BorderThickness="0"
-		CornerRadius="20"
+		CornerRadius="10"
 		Padding="10"
 		Click="StatusButton_Click"
 		>
