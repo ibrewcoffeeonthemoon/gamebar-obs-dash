@@ -49,6 +49,14 @@ namespace OBS_Status.WebSocket
 							// The actual recording state is in eventData.outputActive (true/false)
 							IsRecording = message.D["eventData"]?["outputActive"]?.ToObject<bool>() ?? false;
 						}
+						else if (eventType == "CurrentProfileChanged")
+						{
+							ProfileName = message.D["eventData"]?["profileName"]?.ToObject<string>() ?? "";
+						}
+						else if (eventType == "CurrentProgramSceneChanged")
+						{
+							SceneName = message.D["eventData"]?["sceneName"]?.ToObject<string>() ?? "";
+						}
 						break;
 
 					case OpCode.RequestResponse:

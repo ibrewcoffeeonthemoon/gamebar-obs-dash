@@ -40,7 +40,7 @@
 					FontSize="13"
 					FontWeight="Light"
 					Foreground="LightGoldenrodYellow"
-					Text="Profile -  profile name"
+					Text="--"
 					/>
 				<!-- Scene Name Text -->
 				<TextBlock
@@ -49,7 +49,7 @@
 					FontSize="13"
 					FontWeight="Light"
 					Foreground="LightYellow"
-					Text="Scene - long long scene name"
+					Text="--"
 					/>
 			</StackPanel>
 			<!-- Status Text -->
