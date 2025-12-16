@@ -17,7 +17,7 @@ namespace OBS_Status
     public sealed partial class WidgetPage : Page
     {
         private int minW = 120;
-        private int maxW = 350;
+        private int maxW = 300;
 
 		public WidgetPage()
         {
