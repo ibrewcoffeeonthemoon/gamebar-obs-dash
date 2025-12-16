@@ -16,15 +16,19 @@ namespace OBS_Status
     /// </summary>
     public sealed partial class WidgetPage : Page
     {
+        private int minW = 120;
+        private int maxW = 350;
+
 		public WidgetPage()
         {
             // init UI
             this.InitializeComponent();
-            Debug.WriteLine("WidgetPage initialized.");
+            StatusButton.Width = maxW;
             // register onloaded handler
             this.Loaded += OnLoaded;
             // store reference to this page in Client singleton
             Client.Instance.Page = this; 
+
 		}
         ~WidgetPage()
         {
@@ -87,8 +91,6 @@ namespace OBS_Status
 			InfoTextPanel.Visibility = InfoTextPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
             bool infoIsVisible = InfoTextPanel.Visibility == Visibility.Visible;
             // resize the window to fit content
-            int minW = 120;
-            int maxW = 350;
             StatusButton.Width = infoIsVisible ? maxW : minW;
             StatusButton.Width = infoIsVisible ? maxW : minW;
             // change the recording timer text alignment
