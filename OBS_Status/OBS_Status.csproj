@@ -114,6 +114,9 @@
     <Compile Include="WidgetPage.xaml.cs">
       <DependentUpon>WidgetPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WidgetSettingsPage.xaml.cs">
+      <DependentUpon>WidgetSettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +193,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WidgetPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WidgetSettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

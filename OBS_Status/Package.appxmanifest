@@ -52,6 +52,7 @@
               <GameBarWidget Type="Standard">
                 <HomeMenuVisible>true</HomeMenuVisible>
                 <PinningSupported>true</PinningSupported>
+                <SettingsSupported AppExtensionId="WidgetSettingsPage" />
                   <ActivateAfterInstall>true</ActivateAfterInstall>
                   <FavoriteAfterInstall>true</FavoriteAfterInstall>
                 <Window>
@@ -62,6 +63,29 @@
                   <ResizeSupported>
                     <Horizontal>true</Horizontal>
                     <Vertical>true</Vertical>
+                  </ResizeSupported>
+                </Window>
+              </GameBarWidget>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+        <!-- Widget Settings (Also a widget of separate type) -->
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="microsoft.gameBarUIExtension"
+                             Id="WidgetSettings"
+                             DisplayName="OBS Status Settings"
+                             Description="Gamebar OBS Status Widget Settings"
+                             PublicFolder="Gamebar">
+            <uap3:Properties>
+              <GameBarWidget Type="Settings">
+                <Window>
+                  <Size>
+                    <Height>300</Height>
+                    <Width>300</Width>
+                  </Size>
+                  <ResizeSupported>
+                    <Horizontal>false</Horizontal>
+                    <Vertical>false</Vertical>
                   </ResizeSupported>
                 </Window>
               </GameBarWidget>
