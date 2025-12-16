@@ -20,11 +20,15 @@ namespace OBS_Status
         {
             // init UI
             this.InitializeComponent();
+            // ensure state dependent UI is in sync if widget is recreated
+            UpdateColor();
+            UpdateRecordingTimer();
+            UpdateProfileName();
+            UpdateSceneName();
             // register onloaded handler
             this.Loaded += OnLoaded;
             // store reference to this page in Client singleton
             Client.Instance.Page = this; 
-
 		}
         ~WidgetPage()
         {
