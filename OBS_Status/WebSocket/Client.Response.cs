@@ -66,8 +66,10 @@ namespace OBS_Status.WebSocket
 						string status = requestSuccess ? "Success" : "Failed";
 						Debug.WriteLine($"Response for {requestType} (ID: {requestId}): {status}");
 
+						if (!requestSuccess)
+							break;
 						// handle specific request responses
-						if (requestSuccess && requestType == "GetRecordStatus")
+						if (requestType == "GetRecordStatus")
 						{
 							// Update recording state
 							IsRecording = message.D["responseData"]?["outputActive"]?.ToObject<bool>() ?? false;
@@ -77,13 +79,21 @@ namespace OBS_Status.WebSocket
 							long durationMs = message.D["responseData"]?["outputDuration"]?.ToObject<long>() ?? 0;
 							// Round to nearest second
 							long roundedSeconds = (durationMs + 500) / 1000;  // +500 for proper rounding
-							// Convert to TimeSpan and format without milliseconds
+																			  // Convert to TimeSpan and format without milliseconds
 							TimeSpan ts = TimeSpan.FromSeconds(roundedSeconds);
 							string formattedTime = ts.ToString(@"hh\:mm\:ss");
 							Debug.WriteLine($"Raw timecode: {timecode}, Formatted timecode: {formattedTime}");
 							// Update the recording timer text
 							RecordingTimecode = formattedTime;
 							Debug.WriteLine($"Recording timer updated: {timecode}");
+						}
+						else if (requestType == "GetProfileList")
+						{
+							ProfileName = message.D["responseData"]?["currentProfileName"]?.ToObject<string>() ?? "";
+						}
+						else if (requestType == "GetSceneList")
+						{
+							SceneName = message.D["responseData"]?["currentProgramSceneName"]?.ToObject<string>() ?? "";
 						}
 						break;
 
