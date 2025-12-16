@@ -59,7 +59,16 @@ namespace OBS_Status
 
         }
 
-        private void StatusButton_Click(object sender, RoutedEventArgs e)
+        public async void UpdateRecordingTimer()
+        {
+			_ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			{
+				RecordingTimerText.Text = Client.Instance.RecordingTimecode;
+			});
+        }
+
+
+		private void StatusButton_Click(object sender, RoutedEventArgs e)
         {
 			// toggle the info visibility
 			InfoTextPanel.Visibility = InfoTextPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;

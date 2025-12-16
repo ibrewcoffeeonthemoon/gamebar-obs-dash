@@ -35,12 +35,7 @@ namespace OBS_Status.WebSocket
 
 				// Only update recording timer text if already connected
 				if (IsConnected)
-				{
-					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-					{
-						Page.RecordingTimerText.Text = value;
-					});
-				}
+					Page?.UpdateRecordingTimer();
 			}
 		}
 
