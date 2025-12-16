@@ -32,7 +32,7 @@ namespace OBS_Status.WebSocket
 		private async Task Ping()
 		{
 			// Create the Ping/Identify message
-			string requestId = "f819dcf0-89cc-11eb-8f0e-382c4ac93b9c";
+			string requestId = Guid.NewGuid().ToString();
 			var requestData = new JObject();
 			var message = new Message
 			{
