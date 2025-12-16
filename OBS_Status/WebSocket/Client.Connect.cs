@@ -24,7 +24,7 @@ namespace OBS_Status.WebSocket
 				// update internal state
 				_isConnected = value;
 				// then call widget page to update color
-				Page?.UpdateColor();
+				widgetPage?.UpdateColor();
 			}
 		}
 

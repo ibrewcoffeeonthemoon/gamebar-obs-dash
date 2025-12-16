@@ -34,7 +34,7 @@ namespace OBS_Status
             // register onloaded handler
             this.Loaded += OnLoaded;
             // store reference to this page in Client singleton
-            Client.Instance.Page = this;
+            Client.Instance.widgetPage = this;
 		}
         ~WidgetPage()
         {

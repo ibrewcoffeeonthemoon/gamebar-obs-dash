@@ -20,7 +20,7 @@ namespace OBS_Status.WebSocket
 				// update internal state
 				_isRecording = value;
 				// then call widget page to update color
-				Page?.UpdateColor();
+				widgetPage?.UpdateColor();
 			}
 		}
 
@@ -35,7 +35,7 @@ namespace OBS_Status.WebSocket
 
 				// Only update recording timer text if already connected
 				if (IsConnected)
-					Page?.UpdateRecordingTimer();
+					widgetPage?.UpdateRecordingTimer();
 			}
 		}
 
@@ -50,7 +50,7 @@ namespace OBS_Status.WebSocket
 
 				// Only update profile name text if already connected
 				if (IsConnected)
-					Page?.UpdateProfileName();
+					widgetPage?.UpdateProfileName();
 			}
 		}
 
@@ -64,7 +64,7 @@ namespace OBS_Status.WebSocket
 				_sceneName = value;
 				// Only update scene name text if already connected
 				if (IsConnected)
-					Page?.UpdateSceneName();
+					widgetPage?.UpdateSceneName();
 			}
 		}
 
