@@ -44,6 +44,45 @@ namespace OBS_Status.WebSocket
 			}
 		}
 
+		private string _profileName = "";
+		public string ProfileName
+		{
+			get => _profileName;
+			set
+			{
+				// update internal state
+				_profileName = value;
+
+				// Only update profile name text if already connected
+				if (IsConnected)
+				{
+					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+					{
+						Page.ProfileNameText.Text = value;
+					});
+				}
+			}
+		}
+
+		private string _sceneName = "";
+		public string SceneName
+		{
+			get => _sceneName;
+			set
+			{
+				// update internal state
+				_sceneName = value;
+				// Only update scene name text if already connected
+				if (IsConnected)
+				{
+					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+					{
+						Page.SceneNameText.Text = value;
+					});
+				}
+			}
+		}
+
 		private async Task RequestGetRecordStatus()
 		{
 			// Build the GetRecordStatus request
