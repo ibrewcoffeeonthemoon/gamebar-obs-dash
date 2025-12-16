@@ -37,6 +37,7 @@ namespace OBS_Status
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine("WidgetPage OnLoaded(): await Client.Instance.Run()");
             await Client.Instance.Run();
 		}
 
