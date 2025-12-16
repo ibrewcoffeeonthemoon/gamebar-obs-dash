@@ -121,8 +121,7 @@ namespace OBS_Status
             // if necessary pre-configure any required data needed by the settings widget prior to activation
             // ...
             Debug.WriteLine("Widget_SettingsClicked: Activating settings widget.");
-            widget.CenterWindowAsync();
-            await widget.ActivateSettingsAsync();
+            await sender.ActivateSettingsAsync();
 		}
 	}
 }
