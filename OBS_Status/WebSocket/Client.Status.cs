@@ -71,8 +71,7 @@ namespace OBS_Status.WebSocket
 		private async Task RequestGetRecordStatus()
 		{
 			// Build the GetRecordStatus request
-			//string requestId = Guid.NewGuid().ToString();
-			string requestId = "f819dcf0-89cc-11eb-8f0e-382c4ac93b9c";
+			string requestId = Guid.NewGuid().ToString();
 			var requestData = new JObject();  // No parameters needed for GetRecordStatus
 			var d = new JObject
 			{
@@ -100,7 +99,7 @@ namespace OBS_Status.WebSocket
 		private async Task RequestGetProfileList()
 		{
 			// Build the GetProfileList request
-			string requestId = "f819dd02-89cc-11eb-8f0e-382c4ac93b9c";
+			string requestId = Guid.NewGuid().ToString();
 			var requestData = new JObject();  // No parameters needed for GetProfileList
 			var d = new JObject
 			{
@@ -127,7 +126,7 @@ namespace OBS_Status.WebSocket
 		private async Task RequestGetSceneList()
 		{
 			// Build the GetSceneList request
-			string requestId = "f819dd1e-89cc-11eb-8f0e-382c4ac93b9c";
+			string requestId = Guid.NewGuid().ToString();
 			var requestData = new JObject();  // No parameters needed for GetSceneList
 			var d = new JObject
 			{
