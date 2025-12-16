@@ -80,12 +80,12 @@
               <GameBarWidget Type="Settings">
                 <Window>
                   <Size>
-                    <Height>300</Height>
-                    <Width>300</Width>
+                    <Height>400</Height>
+                    <Width>500</Width>
                   </Size>
                   <ResizeSupported>
-                    <Horizontal>false</Horizontal>
-                    <Vertical>false</Vertical>
+                    <Horizontal>true</Horizontal>
+                    <Vertical>true</Vertical>
                   </ResizeSupported>
                 </Window>
               </GameBarWidget>

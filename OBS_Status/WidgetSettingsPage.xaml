@@ -7,35 +7,47 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-	<StackPanel
-		HorizontalAlignment="Center"
-		VerticalAlignment="Center"
-		Width="260"
-		Spacing="8">
-		<TextBlock Text="OBS WebSocket Settings" />
+	<Grid Padding="12">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="150" />
+		</Grid.ColumnDefinitions>
+
+		<!-- Log area (left) -->
 		<TextBox
-			x:Name="AddressTextBox"
-			Header="Address"
-			PlaceholderText="127.0.0.1"
-			GotFocus="OnFocus"
-			/>
-		<TextBox
-			x:Name="PortTextBox"
-			Header="Port"
-			PlaceholderText="4455"
-			InputScope="Number"
-			GotFocus="OnFocus"
-			/>
-		<PasswordBox
-			x:Name="PasswordBox"
-			Header="Password"
-			GotFocus="OnFocus"
-			/>
-		<Button
-			Content="Save"
-			Click="OnSave"
-			Padding="3"
-			HorizontalAlignment="Stretch" 
-			Margin="0,20,0,0" />
-	</StackPanel>
+			x:Name="LogTextBox"
+			Grid.Column="0"
+			Header="Log"
+			IsReadOnly="True"
+			AcceptsReturn="True"
+			TextWrapping="Wrap"
+			Margin="0,0,12,0" />
+
+		<!-- Settings (right) -->
+		<StackPanel
+			Grid.Column="1"
+			Spacing="8">
+			<TextBox
+				x:Name="AddressTextBox"
+				Header="Address"
+				PlaceholderText="127.0.0.1"
+				GotFocus="OnFocus" />
+			<TextBox
+				x:Name="PortTextBox"
+				Header="Port"
+				PlaceholderText="4455"
+				InputScope="Number"
+				GotFocus="OnFocus" />
+			<PasswordBox
+				x:Name="PasswordBox"
+				Header="Password"
+				GotFocus="OnFocus" />
+			<Button
+				Content="Save"
+				Click="OnSave"
+				Margin="0,20,0,0"
+				HorizontalAlignment="Stretch" />
+		</StackPanel>
+	</Grid>
+
 </Page>
