@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Windows.Networking.Sockets;
+using Windows.Storage;
 using Windows.Storage.Streams;
 
 namespace OBS_Status.WebSocket
@@ -27,9 +28,6 @@ namespace OBS_Status.WebSocket
 			}
 		}
 
-		private string password = File.ReadAllText(Path.Combine(System.AppContext.BaseDirectory, ".password"));
-		private string endpoint = File.ReadAllText(Path.Combine(System.AppContext.BaseDirectory, ".endpoint"));
-
 		public async Task Connect()
 		{
 			// Check if already connected
@@ -48,6 +46,9 @@ namespace OBS_Status.WebSocket
 				// register message handler
 				socket.MessageReceived += OnMessageReceive;
 				// connect to the obs server
+				string address = ApplicationData.Current.LocalSettings.Values["ObsAddress"] as string;
+				string port = ApplicationData.Current.LocalSettings.Values["ObsPort"] as string;
+				string endpoint = $"ws://{address}:{port}";
 				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
 				await socket.ConnectAsync(new Uri(endpoint));
 			}
@@ -83,6 +84,7 @@ namespace OBS_Status.WebSocket
 				}
 
 				// Step 1: secret = base64( SHA256( password + salt ) )
+				string password = ApplicationData.Current.LocalSettings.Values["ObsPassword"] as string;
 				string secretString = password + salt;
 				byte[] secretBytes = Encoding.UTF8.GetBytes(secretString);
 				byte[] secretHash = SHA256.Create().ComputeHash(secretBytes);
