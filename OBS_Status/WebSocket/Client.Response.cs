@@ -45,18 +45,12 @@ namespace OBS_Status.WebSocket
 						// Handle specific events if needed
 						// - RecordStateChanged
 						if (eventType == "RecordStateChanged")
-						{
 							// The actual recording state is in eventData.outputActive (true/false)
 							IsRecording = message.D["eventData"]?["outputActive"]?.ToObject<bool>() ?? false;
-						}
 						else if (eventType == "CurrentProfileChanged")
-						{
 							ProfileName = message.D["eventData"]?["profileName"]?.ToObject<string>() ?? "";
-						}
 						else if (eventType == "CurrentProgramSceneChanged")
-						{
 							SceneName = message.D["eventData"]?["sceneName"]?.ToObject<string>() ?? "";
-						}
 						break;
 
 					case OpCode.RequestResponse:
@@ -88,13 +82,9 @@ namespace OBS_Status.WebSocket
 							Debug.WriteLine($"Recording timer updated: {timecode}");
 						}
 						else if (requestType == "GetProfileList")
-						{
 							ProfileName = message.D["responseData"]?["currentProfileName"]?.ToObject<string>() ?? "";
-						}
 						else if (requestType == "GetSceneList")
-						{
 							SceneName = message.D["responseData"]?["currentProgramSceneName"]?.ToObject<string>() ?? "";
-						}
 						break;
 
 					default:
