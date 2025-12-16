@@ -61,14 +61,16 @@ namespace OBS_Status
 
         private void StatusButton_Click(object sender, RoutedEventArgs e)
         {
+			// toggle the info visibility
+			InfoTextPanel.Visibility = InfoTextPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
             bool infoIsVisible = InfoTextPanel.Visibility == Visibility.Visible;
-			// clicking button toggle visibility of info text panel
-			InfoTextPanel.Visibility = infoIsVisible ? Visibility.Collapsed : Visibility.Visible;
             // resize the window to fit content
             int minW = 120;
-            int maxW = 400;
-            StatusButton.MinWidth = infoIsVisible ? minW : maxW;
-            StatusButton.MaxWidth = infoIsVisible ? minW : maxW;
+            int maxW = 350;
+            StatusButton.Width = infoIsVisible ? maxW : minW;
+            StatusButton.Width = infoIsVisible ? maxW : minW;
+            // change the recording timer text alignment
+            RecordingTimerPanel.HorizontalAlignment = infoIsVisible ? HorizontalAlignment.Right : HorizontalAlignment.Center;
 		}
 
 	}

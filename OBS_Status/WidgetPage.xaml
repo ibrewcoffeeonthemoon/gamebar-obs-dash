@@ -10,15 +10,17 @@
 	<Button 
 		x:Name="StatusButton"
 		x:FieldModifier="public"
-		HorizontalAlignment="Stretch"
+		HorizontalAlignment="Right"
 		VerticalAlignment="Stretch"
+		HorizontalContentAlignment="Stretch"
+		VerticalContentAlignment="Center"
 		BorderThickness="0"
 		CornerRadius="20"
-		Padding="5"
+		Padding="10"
+		Width="350"
 		Click="StatusButton_Click"
 		>
-		<StackPanel
-			Orientation="Horizontal"
+		<Grid
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
 			>
@@ -27,8 +29,10 @@
 				x:Name="InfoTextPanel"
 				x:FieldModifier="public"
 				Orientation="Vertical"
-				Padding="10 0 20 0"
-				Visibility="Visible">
+				HorizontalAlignment="Left"
+				VerticalAlignment="Center"
+				Visibility="Visible"
+				>
 				<!-- Profile Name Text -->
 				<TextBlock
 					x:Name="ProfileNameText"
@@ -36,7 +40,7 @@
 					FontSize="13"
 					FontWeight="Light"
 					Foreground="LightGoldenrodYellow"
-					Text="Profile - long long long profile name"
+					Text="Profile -  profile name"
 					/>
 				<!-- Scene Name Text -->
 				<TextBlock
@@ -49,18 +53,23 @@
 					/>
 			</StackPanel>
 			<!-- Status Text -->
-			<TextBlock 
-				x:Name="RecordingTimerText"
+			<StackPanel
+				x:Name="RecordingTimerPanel"
 				x:FieldModifier="public"
-				HorizontalAlignment="Stretch"
+				HorizontalAlignment="Right"
 				VerticalAlignment="Center"
-				TextAlignment="Center"
-				Foreground="White"
-				FontSize="22"
-				FontWeight="ExtraBold"
-				Text="00:00:00"
-				/>
-		</StackPanel>
+				>
+				<TextBlock 
+					x:Name="RecordingTimerText"
+					x:FieldModifier="public"
+					TextAlignment="Center"
+					Foreground="White"
+					FontSize="22"
+					FontWeight="ExtraBold"
+					Text="00:00:00"
+					/>
+			</StackPanel>
+		</Grid>
 	</Button>
 </Page>
 
