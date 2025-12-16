@@ -8,16 +8,14 @@
     mc:Ignorable="d"
     >
 	<Button 
-		x:Name="StatusBorder"
+		x:Name="StatusButton"
 		x:FieldModifier="public"
-		Background="DimGray"
-		BorderBrush="DarkSlateBlue"
 		HorizontalAlignment="Stretch"
 		VerticalAlignment="Stretch"
 		BorderThickness="0"
 		CornerRadius="20"
 		Padding="5"
-		Click="StatusBorder_Click"
+		Click="StatusButton_Click"
 		>
 		<StackPanel
 			Orientation="Horizontal"

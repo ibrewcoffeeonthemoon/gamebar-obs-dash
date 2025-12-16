@@ -42,27 +42,27 @@ namespace OBS_Status
 			{
                 if (!Client.Instance.IsConnected)
                 {
-					StatusBorder.Background = new SolidColorBrush(Colors.DimGray);
+					StatusButton.Background = new SolidColorBrush(Colors.DimGray);
                     return;
                 }
                 else if (!Client.Instance.IsRecording)
                 {
-					StatusBorder.Background = new SolidColorBrush(Colors.DarkGreen);
+					StatusButton.Background = new SolidColorBrush(Colors.DarkGreen);
                     return;
 				}
                 else
                 {
-					StatusBorder.Background = new SolidColorBrush(Colors.Red);
+					StatusButton.Background = new SolidColorBrush(Colors.Red);
                     return;
                 }
 			});
 
         }
 
-        private void StatusBorder_Click(object sender, RoutedEventArgs e)
+        private void StatusButton_Click(object sender, RoutedEventArgs e)
         {
 			// clicking button toggle visibility of info text panel
 			InfoTextPanel.Visibility = InfoTextPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        }
-    }
+		}
+	}
 }
