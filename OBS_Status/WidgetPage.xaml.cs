@@ -1,10 +1,13 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using Microsoft.Gaming.XboxGameBar;
 using OBS_Status.WebSocket;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -16,6 +19,9 @@ namespace OBS_Status
     /// </summary>
     public sealed partial class WidgetPage : Page
     {
+		// ref to the XboxGameBarWidget
+		private XboxGameBarWidget widget = null;
+
 		public WidgetPage()
         {
             // init UI
@@ -28,7 +34,7 @@ namespace OBS_Status
             // register onloaded handler
             this.Loaded += OnLoaded;
             // store reference to this page in Client singleton
-            Client.Instance.Page = this; 
+            Client.Instance.Page = this;
 		}
         ~WidgetPage()
         {
@@ -41,7 +47,20 @@ namespace OBS_Status
             await Client.Instance.Run();
 		}
 
-        public async void UpdateColor()
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			// In our example we pass the XboxGameBarWidget through the Navigate event when creating and showing the parent widget for the first time, your implementation may differ.
+
+			// Here we store the parameter in a member variable "widget":
+			widget = e.Parameter as XboxGameBarWidget;
+
+			// Hook up the settings clicked event
+			widget.SettingsClicked += Widget_SettingsClicked;
+
+			// ...
+		}
+
+		public async void UpdateColor()
         {
 			_ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
 			{
@@ -97,5 +116,12 @@ namespace OBS_Status
             RecordingTimerPanel.HorizontalAlignment = infoIsVisible ? HorizontalAlignment.Right : HorizontalAlignment.Center;
 		}
 
+		private async void Widget_SettingsClicked(XboxGameBarWidget sender, object args)
+		{
+            // if necessary pre-configure any required data needed by the settings widget prior to activation
+            // ...
+            Debug.WriteLine("Widget_SettingsClicked: Activating settings widget.");
+            await sender.ActivateSettingsAsync();
+		}
 	}
 }
