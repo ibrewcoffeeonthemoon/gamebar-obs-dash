@@ -13,6 +13,7 @@ namespace OBS_Status.WebSocket
 
 		// This will hold the reference to your WidgetPage (or just the dispatcher)
 		public WidgetPage widgetPage { get; set; }
+		public WidgetSettingsPage widgetSettingsPage { get; set; }
 
 		// Private constructor — no one can create new Client() from outside
 		private Client()

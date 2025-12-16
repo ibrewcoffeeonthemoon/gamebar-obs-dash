@@ -14,8 +14,12 @@ namespace OBS_Status
     {
         public WidgetSettingsPage()
         {
+            // init UI
             this.InitializeComponent();
+			// load form settings
 			LoadSettings();
+            // store reference to this page in Client singleton
+            Client.Instance.widgetSettingsPage = this;
         }
 
 		void LoadSettings()
