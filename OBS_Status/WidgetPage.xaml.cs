@@ -42,21 +42,36 @@ namespace OBS_Status
 			{
                 if (!Client.Instance.IsConnected)
                 {
-					StatusBorder.Background = new SolidColorBrush(Colors.DimGray);
+					StatusButton.Background = new SolidColorBrush(Colors.DimGray);
                     return;
                 }
                 else if (!Client.Instance.IsRecording)
                 {
-					StatusBorder.Background = new SolidColorBrush(Colors.DarkGreen);
+					StatusButton.Background = new SolidColorBrush(Colors.DarkGreen);
                     return;
 				}
                 else
                 {
-					StatusBorder.Background = new SolidColorBrush(Colors.Red);
+					StatusButton.Background = new SolidColorBrush(Colors.Red);
                     return;
                 }
 			});
 
         }
+
+        private void StatusButton_Click(object sender, RoutedEventArgs e)
+        {
+			// toggle the info visibility
+			InfoTextPanel.Visibility = InfoTextPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            bool infoIsVisible = InfoTextPanel.Visibility == Visibility.Visible;
+            // resize the window to fit content
+            int minW = 120;
+            int maxW = 350;
+            StatusButton.Width = infoIsVisible ? maxW : minW;
+            StatusButton.Width = infoIsVisible ? maxW : minW;
+            // change the recording timer text alignment
+            RecordingTimerPanel.HorizontalAlignment = infoIsVisible ? HorizontalAlignment.Right : HorizontalAlignment.Center;
+		}
+
 	}
 }
