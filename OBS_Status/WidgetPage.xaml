@@ -15,20 +15,46 @@
 		HorizontalAlignment="Stretch"
 		VerticalAlignment="Stretch"
 		BorderThickness="0"
-		CornerRadius="25"
+		CornerRadius="20"
 		Padding="5">
-		<!-- Status Text -->
-		<TextBlock 
-			x:Name="RecordingTimerText"
-			x:FieldModifier="public"
+		<StackPanel
+			Orientation="Horizontal"
 			HorizontalAlignment="Stretch"
-			VerticalAlignment="Center"
-			TextAlignment="Center"
-			Foreground="White"
-			FontSize="22"
-			FontWeight="ExtraBold"
-			Text="00:00:00"
-			/>
+			VerticalAlignment="Stretch"
+			>
+			<!-- Info Text -->
+			<StackPanel
+				Orientation="Vertical"
+				Padding="10 0 20 0"
+				Visibility="Visible">
+				<!-- Profile Name Text -->
+				<TextBlock
+					FontSize="13"
+					FontWeight="Light"
+					Foreground="LightGoldenrodYellow"
+					Text="Profile - long long long profile name"
+					/>
+				<!-- Scene Name Text -->
+				<TextBlock
+					FontSize="13"
+					FontWeight="Light"
+					Foreground="LightYellow"
+					Text="Scene - long long scene name"
+					/>
+			</StackPanel>
+			<!-- Status Text -->
+			<TextBlock 
+				x:Name="RecordingTimerText"
+				x:FieldModifier="public"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				TextAlignment="Center"
+				Foreground="White"
+				FontSize="22"
+				FontWeight="ExtraBold"
+				Text="00:00:00"
+				/>
+		</StackPanel>
 	</Button>
 </Page>
 
