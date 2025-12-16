@@ -7,13 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
-	<Border 
+	<Button 
 		x:Name="StatusBorder"
 		x:FieldModifier="public"
 		Background="DimGray"
 		BorderBrush="DarkSlateBlue"
 		HorizontalAlignment="Stretch"
 		VerticalAlignment="Stretch"
+		BorderThickness="0"
 		CornerRadius="25"
 		Padding="5">
 		<!-- Status Text -->
@@ -28,6 +29,6 @@
 			FontWeight="ExtraBold"
 			Text="00:00:00"
 			/>
-	</Border>
+	</Button>
 </Page>
 
