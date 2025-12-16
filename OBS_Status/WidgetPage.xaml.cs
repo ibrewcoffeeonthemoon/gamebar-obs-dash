@@ -61,8 +61,15 @@ namespace OBS_Status
 
         private void StatusButton_Click(object sender, RoutedEventArgs e)
         {
+            bool infoIsVisible = InfoTextPanel.Visibility == Visibility.Visible;
 			// clicking button toggle visibility of info text panel
-			InfoTextPanel.Visibility = InfoTextPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+			InfoTextPanel.Visibility = infoIsVisible ? Visibility.Collapsed : Visibility.Visible;
+            // resize the window to fit content
+            int minW = 120;
+            int maxW = 400;
+            StatusButton.MinWidth = infoIsVisible ? minW : maxW;
+            StatusButton.MaxWidth = infoIsVisible ? minW : maxW;
 		}
+
 	}
 }
