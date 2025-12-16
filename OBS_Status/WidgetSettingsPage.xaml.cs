@@ -1,4 +1,4 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -14,9 +14,10 @@ namespace OBS_Status
         {
             this.InitializeComponent();
         }
-        private void MyButton_Click(object sender, RoutedEventArgs e)
+
+        private void OnSave(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            myButton.Content = "Clicked";
-        }
-    }
+            Debug.WriteLine("Save button clicked in WidgetSettingsPage.");
+		}
+	}
 }
