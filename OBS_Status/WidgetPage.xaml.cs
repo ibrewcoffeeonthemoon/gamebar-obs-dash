@@ -66,7 +66,20 @@ namespace OBS_Status
 				RecordingTimerText.Text = Client.Instance.RecordingTimecode;
 			});
         }
-
+        public async void UpdateProfileName()
+        {
+			_ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			{
+				ProfileNameText.Text = Client.Instance.ProfileName;
+			});
+        }
+        public async void UpdateSceneName()
+        {
+			_ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			{
+				SceneNameText.Text = Client.Instance.SceneName;
+			});
+        }
 
 		private void StatusButton_Click(object sender, RoutedEventArgs e)
         {

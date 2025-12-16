@@ -50,12 +50,7 @@ namespace OBS_Status.WebSocket
 
 				// Only update profile name text if already connected
 				if (IsConnected)
-				{
-					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-					{
-						Page.ProfileNameText.Text = value;
-					});
-				}
+					Page?.UpdateProfileName();
 			}
 		}
 
@@ -69,12 +64,7 @@ namespace OBS_Status.WebSocket
 				_sceneName = value;
 				// Only update scene name text if already connected
 				if (IsConnected)
-				{
-					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-					{
-						Page.SceneNameText.Text = value;
-					});
-				}
+					Page?.UpdateSceneName();
 			}
 		}
 
