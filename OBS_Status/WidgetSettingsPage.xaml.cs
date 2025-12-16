@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -33,6 +34,14 @@ namespace OBS_Status
 			settings.Values["ObsAddress"] = AddressTextBox.Text?.Trim();
 			settings.Values["ObsPort"] = PortTextBox.Text?.Trim();
 			settings.Values["ObsPassword"] = PasswordBox.Password;
+		}
+
+		private void OnFocus(object sender, RoutedEventArgs e)
+		{
+			if (sender is TextBox tb)
+				tb.SelectAll();
+			else if (sender is PasswordBox pwb)
+				pwb.SelectAll();
 		}
 	}
 }

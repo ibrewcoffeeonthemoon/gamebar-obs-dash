@@ -12,20 +12,25 @@
 		VerticalAlignment="Center"
 		Width="260"
 		Spacing="8">
-		<TextBlock
-			Text="OBS WebSocket Settings" />
+		<TextBlock Text="OBS WebSocket Settings" />
 		<TextBox
 			x:Name="AddressTextBox"
 			Header="Address"
-			PlaceholderText="127.0.0.1" />
+			PlaceholderText="127.0.0.1"
+			GotFocus="OnFocus"
+			/>
 		<TextBox
 			x:Name="PortTextBox"
 			Header="Port"
 			PlaceholderText="4455"
-			InputScope="Number" />
+			InputScope="Number"
+			GotFocus="OnFocus"
+			/>
 		<PasswordBox
 			x:Name="PasswordBox"
-			Header="Password" />
+			Header="Password"
+			GotFocus="OnFocus"
+			/>
 		<Button
 			Content="Save"
 			Click="OnSave"
