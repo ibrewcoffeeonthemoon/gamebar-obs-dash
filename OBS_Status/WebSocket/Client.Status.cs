@@ -97,5 +97,60 @@ namespace OBS_Status.WebSocket
 				Debug.WriteLine($"Failed to send GetRecordStatus: {ex.Message}");
 			}
 		}
+		private async Task RequestGetProfileList()
+		{
+			// Build the GetProfileList request
+			string requestId = "f819dd02-89cc-11eb-8f0e-382c4ac93b9c";
+			var requestData = new JObject();  // No parameters needed for GetProfileList
+			var d = new JObject
+			{
+				["requestType"] = "GetProfileList",
+				["requestId"] = requestId,
+				["requestData"] = requestData
+			};
+			var message = new Message
+			{
+				Op = (int)OpCode.Request,
+				D = d
+			};
+			string jsonToSend = JsonConvert.SerializeObject(message);
+			// Send it over the WebSocket
+			try
+			{
+				await SendMessageAsync(jsonToSend);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Failed to send GetProfileList: {ex.Message}");
+			}
+		}
+		private async Task RequestGetSceneList()
+		{
+			// Build the GetSceneList request
+			string requestId = "f819dd1e-89cc-11eb-8f0e-382c4ac93b9c";
+			var requestData = new JObject();  // No parameters needed for GetSceneList
+			var d = new JObject
+			{
+				["requestType"] = "GetSceneList",
+				["requestId"] = requestId,
+				["requestData"] = requestData
+			};
+			var message = new Message
+			{
+				Op = (int)OpCode.Request,
+				D = d
+			};
+			string jsonToSend = JsonConvert.SerializeObject(message);
+			// Send it over the WebSocket
+			try
+			{
+				await SendMessageAsync(jsonToSend);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Failed to send GetSceneList: {ex.Message}");
+			}
+		}
+
 	}
 }
