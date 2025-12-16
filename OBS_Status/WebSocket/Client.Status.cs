@@ -35,12 +35,36 @@ namespace OBS_Status.WebSocket
 
 				// Only update recording timer text if already connected
 				if (IsConnected)
-				{
-					Page?.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-					{
-						Page.RecordingTimerText.Text = value;
-					});
-				}
+					Page?.UpdateRecordingTimer();
+			}
+		}
+
+		private string _profileName = "";
+		public string ProfileName
+		{
+			get => _profileName;
+			set
+			{
+				// update internal state
+				_profileName = value;
+
+				// Only update profile name text if already connected
+				if (IsConnected)
+					Page?.UpdateProfileName();
+			}
+		}
+
+		private string _sceneName = "";
+		public string SceneName
+		{
+			get => _sceneName;
+			set
+			{
+				// update internal state
+				_sceneName = value;
+				// Only update scene name text if already connected
+				if (IsConnected)
+					Page?.UpdateSceneName();
 			}
 		}
 
@@ -73,5 +97,60 @@ namespace OBS_Status.WebSocket
 				Debug.WriteLine($"Failed to send GetRecordStatus: {ex.Message}");
 			}
 		}
+		private async Task RequestGetProfileList()
+		{
+			// Build the GetProfileList request
+			string requestId = "f819dd02-89cc-11eb-8f0e-382c4ac93b9c";
+			var requestData = new JObject();  // No parameters needed for GetProfileList
+			var d = new JObject
+			{
+				["requestType"] = "GetProfileList",
+				["requestId"] = requestId,
+				["requestData"] = requestData
+			};
+			var message = new Message
+			{
+				Op = (int)OpCode.Request,
+				D = d
+			};
+			string jsonToSend = JsonConvert.SerializeObject(message);
+			// Send it over the WebSocket
+			try
+			{
+				await SendMessageAsync(jsonToSend);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Failed to send GetProfileList: {ex.Message}");
+			}
+		}
+		private async Task RequestGetSceneList()
+		{
+			// Build the GetSceneList request
+			string requestId = "f819dd1e-89cc-11eb-8f0e-382c4ac93b9c";
+			var requestData = new JObject();  // No parameters needed for GetSceneList
+			var d = new JObject
+			{
+				["requestType"] = "GetSceneList",
+				["requestId"] = requestId,
+				["requestData"] = requestData
+			};
+			var message = new Message
+			{
+				Op = (int)OpCode.Request,
+				D = d
+			};
+			string jsonToSend = JsonConvert.SerializeObject(message);
+			// Send it over the WebSocket
+			try
+			{
+				await SendMessageAsync(jsonToSend);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Failed to send GetSceneList: {ex.Message}");
+			}
+		}
+
 	}
 }

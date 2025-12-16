@@ -26,17 +26,21 @@ namespace OBS_Status.WebSocket
 			{
 				// if not connected, try to connect first
 				if (!IsConnected)
-				{
 					await Connect();
-				}
-				// if connected but not recording, just send ping to check connection
-				else if (!IsRecording)
-				{
-					await Ping();
-				}
 				else
 				{
-					await RequestGetRecordStatus();
+					// if connected but missing profile, manually request it
+					if (ProfileName == "")
+						await RequestGetProfileList();
+					// if connected but missing scene, manually request it
+					if (SceneName == "")
+						await RequestGetSceneList();
+					// if connected but not recording, just send ping to check connection
+					if (!IsRecording)
+						await Ping();
+					// if connected and recording, request record status to update timecode
+					else
+						await RequestGetRecordStatus();
 				}
 				// delay for 1 second before next iteration
 				await Task.Delay(1000);
