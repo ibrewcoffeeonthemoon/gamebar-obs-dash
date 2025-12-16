@@ -58,5 +58,11 @@ namespace OBS_Status
 			});
 
         }
-	}
+
+        private void StatusBorder_Click(object sender, RoutedEventArgs e)
+        {
+			// clicking button toggle visibility of info text panel
+			InfoTextPanel.Visibility = InfoTextPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+    }
 }

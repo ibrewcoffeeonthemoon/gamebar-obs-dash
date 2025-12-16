@@ -16,7 +16,9 @@
 		VerticalAlignment="Stretch"
 		BorderThickness="0"
 		CornerRadius="20"
-		Padding="5">
+		Padding="5"
+		Click="StatusBorder_Click"
+		>
 		<StackPanel
 			Orientation="Horizontal"
 			HorizontalAlignment="Stretch"
@@ -24,11 +26,15 @@
 			>
 			<!-- Info Text -->
 			<StackPanel
+				x:Name="InfoTextPanel"
+				x:FieldModifier="public"
 				Orientation="Vertical"
 				Padding="10 0 20 0"
 				Visibility="Visible">
 				<!-- Profile Name Text -->
 				<TextBlock
+					x:Name="ProfileNameText"
+					x:FieldModifier="public"
 					FontSize="13"
 					FontWeight="Light"
 					Foreground="LightGoldenrodYellow"
@@ -36,6 +42,8 @@
 					/>
 				<!-- Scene Name Text -->
 				<TextBlock
+					x:Name="SceneNameText"
+					x:FieldModifier="public"
 					FontSize="13"
 					FontWeight="Light"
 					Foreground="LightYellow"
