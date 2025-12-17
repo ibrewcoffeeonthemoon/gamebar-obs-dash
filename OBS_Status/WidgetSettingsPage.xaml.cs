@@ -1,7 +1,13 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using OBS_Status.WebSocket;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -14,8 +20,16 @@ namespace OBS_Status
     {
         public WidgetSettingsPage()
         {
+            // init UI
             this.InitializeComponent();
+			// load form settings
 			LoadSettings();
+			// load existing log lines
+			LogTextBox.Text = string.Join("\n", LogManager.Snapshot());
+			// subscribe to WidgetLog buffer 
+			LogManager.LineAdded += OnLog;
+			// store reference to this page in Client singleton
+			Client.Instance.widgetSettingsPage = this;
         }
 
 		void LoadSettings()
@@ -42,6 +56,29 @@ namespace OBS_Status
 				tb.SelectAll();
 			else if (sender is PasswordBox pwb)
 				pwb.SelectAll();
+		}
+
+		private void OnLog(string msg)
+		{
+			try
+			{
+				// Update UI on the appropriate thread
+				_ = Dispatcher?.RunAsync(CoreDispatcherPriority.Normal, () =>
+				{
+					LogTextBox.Text += msg + "\n";
+				});
+			}
+			catch (InvalidComObjectException)
+			{
+				// Dispatcher is no longer valid, unsubscribe from log events
+				LogManager.LineAdded -= OnLog;
+				Debug.WriteLine("OnLog: Dispatcher is no longer valid, unsubscribed from log events.");
+			}
+			catch (Exception ex)
+			{
+				// Log other exceptions
+				Debug.WriteLine("OnLog exception: " + ex.Message);
+			}
 		}
 	}
 }

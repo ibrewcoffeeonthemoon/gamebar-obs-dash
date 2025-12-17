@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -20,7 +19,7 @@ namespace OBS_Status.WebSocket
 				// update internal state
 				_isRecording = value;
 				// then call widget page to update color
-				Page?.UpdateColor();
+				widgetPage?.UpdateColor();
 			}
 		}
 
@@ -35,7 +34,7 @@ namespace OBS_Status.WebSocket
 
 				// Only update recording timer text if already connected
 				if (IsConnected)
-					Page?.UpdateRecordingTimer();
+					widgetPage?.UpdateRecordingTimer();
 			}
 		}
 
@@ -50,7 +49,7 @@ namespace OBS_Status.WebSocket
 
 				// Only update profile name text if already connected
 				if (IsConnected)
-					Page?.UpdateProfileName();
+					widgetPage?.UpdateProfileName();
 			}
 		}
 
@@ -64,7 +63,7 @@ namespace OBS_Status.WebSocket
 				_sceneName = value;
 				// Only update scene name text if already connected
 				if (IsConnected)
-					Page?.UpdateSceneName();
+					widgetPage?.UpdateSceneName();
 			}
 		}
 
@@ -93,7 +92,7 @@ namespace OBS_Status.WebSocket
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine($"Failed to send GetRecordStatus: {ex.Message}");
+				Log($"Failed to send GetRecordStatus: {ex.Message}");
 			}
 		}
 		private async Task RequestGetProfileList()
@@ -120,7 +119,7 @@ namespace OBS_Status.WebSocket
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine($"Failed to send GetProfileList: {ex.Message}");
+				Log($"Failed to send GetProfileList: {ex.Message}");
 			}
 		}
 		private async Task RequestGetSceneList()
@@ -147,7 +146,7 @@ namespace OBS_Status.WebSocket
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine($"Failed to send GetSceneList: {ex.Message}");
+				Log($"Failed to send GetSceneList: {ex.Message}");
 			}
 		}
 

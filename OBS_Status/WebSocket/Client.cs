@@ -12,7 +12,8 @@ namespace OBS_Status.WebSocket
 		public static Client Instance => _instance.Value;
 
 		// This will hold the reference to your WidgetPage (or just the dispatcher)
-		public WidgetPage Page { get; set; }
+		public WidgetPage widgetPage { get; set; }
+		public WidgetSettingsPage widgetSettingsPage { get; set; }
 
 		// Private constructor — no one can create new Client() from outside
 		private Client()
@@ -22,7 +23,7 @@ namespace OBS_Status.WebSocket
 		// heartbeat loop
 		public async Task Run()
 		{
-			Debug.WriteLine("Client Run(): starting heartbeat loop.");
+			Log("Client Run(): starting heartbeat loop.");
 			while (true)
 			{
 				// if not connected, try to connect first
@@ -46,6 +47,14 @@ namespace OBS_Status.WebSocket
 				// delay for 1 second before next iteration
 				await Task.Delay(1000);
 			}
+		}
+		public void Log(string message)
+		{
+			// append message to debug output
+			Debug.WriteLine(message);
+			// also send to settings page log if available
+			//widgetSettingsPage?.LogMessage(message);
+			LogManager.Add(message);
 		}
 	}
 }

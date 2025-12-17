@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +23,7 @@ namespace OBS_Status.WebSocket
 				// update internal state
 				_isConnected = value;
 				// then call widget page to update color
-				Page?.UpdateColor();
+				widgetPage?.UpdateColor();
 			}
 		}
 
@@ -49,12 +48,12 @@ namespace OBS_Status.WebSocket
 				string address = ApplicationData.Current.LocalSettings.Values["ObsAddress"] as string;
 				string port = ApplicationData.Current.LocalSettings.Values["ObsPort"] as string;
 				string endpoint = $"ws://{address}:{port}";
-				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
+				Log($"Connecting to OBS at {endpoint}...");
 				await socket.ConnectAsync(new Uri(endpoint));
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine("[WebSocket] " + ex.Message);
+				Log("[WebSocket] " + ex.Message);
 			}
 		}
 
@@ -78,7 +77,7 @@ namespace OBS_Status.WebSocket
 
 				if (string.IsNullOrEmpty(salt) || string.IsNullOrEmpty(challenge))
 				{
-					Debug.WriteLine("Authentication required but missing salt/challenge!");
+					Log("Authentication required but missing salt/challenge!");
 					// Handle error (close connection, etc.)
 					return;
 				}
@@ -98,11 +97,11 @@ namespace OBS_Status.WebSocket
 
 				// Add to Identify payload
 				identifyD["authentication"] = authenticationString;
-				Debug.WriteLine("Authentication computed and added.");
+				Log("Authentication computed and added.");
 			}
 			else
 			{
-				Debug.WriteLine("No authentication required.");
+				Log("No authentication required.");
 			}
 
 			// Build the full Identify message
@@ -114,12 +113,12 @@ namespace OBS_Status.WebSocket
 
 			// Serialize to JSON
 			string jsonToSend = JsonConvert.SerializeObject(identifyMessage);
-			Debug.WriteLine("Sending Identify → " + jsonToSend);
+			Log("Sending Identify → " + jsonToSend);
 
 			// Send it over the WebSocket
 			SendMessageAsync(jsonToSend).Wait();
 
-			Debug.WriteLine("Identify message sent. Waiting for 'Identified'...");
+			Log("Identify message sent. Waiting for 'Identified'...");
 		}
 	}
 }

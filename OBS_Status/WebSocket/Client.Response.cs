@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using Newtonsoft.Json;
 using Windows.Networking.Sockets;
 
@@ -19,29 +18,29 @@ namespace OBS_Status.WebSocket
 
 				if (message == null)
 				{
-					Debug.WriteLine("Failed to deserialize OBS message.");
+					Log("Failed to deserialize OBS message.");
 					return;
 				}
 
 				// Safely handle the opcode (using int base for future-proofing)
-				Debug.WriteLine($"Received opcode: {message.Op}");
+				Log($"Received opcode: {message.Op}");
 
 				switch ((OpCode)message.Op)
 				{
 					case OpCode.Hello:
-						Debug.WriteLine("Received Hello from OBS-WebSocket.");
+						Log("Received Hello from OBS-WebSocket.");
 						Identify(message.D);
 						break;
 
 					case OpCode.Identified:
-						Debug.WriteLine("Successfully identified with OBS-WebSocket!");
+						Log("Successfully identified with OBS-WebSocket!");
 						// Connection is now ready for requests
 						IsConnected = true;
 						break;
 
 					case OpCode.Event:
 						string eventType = message.D["eventType"]?.ToString() ?? "Unknown";
-						Debug.WriteLine($"Event received: {eventType}");
+						Log($"Event received: {eventType}");
 						// Handle specific events if needed
 						// - RecordStateChanged
 						if (eventType == "RecordStateChanged")
@@ -58,7 +57,7 @@ namespace OBS_Status.WebSocket
 						string requestType = message.D["requestType"]?.ToString();
 						bool requestSuccess = message.D["requestStatus"]?["result"]?.ToObject<bool>() ?? false;
 						string status = requestSuccess ? "Success" : "Failed";
-						Debug.WriteLine($"Response for {requestType} (ID: {requestId}): {status}");
+						Log($"Response for {requestType} (ID: {requestId}): {status}");
 
 						if (!requestSuccess)
 							break;
@@ -76,10 +75,10 @@ namespace OBS_Status.WebSocket
 																			  // Convert to TimeSpan and format without milliseconds
 							TimeSpan ts = TimeSpan.FromSeconds(roundedSeconds);
 							string formattedTime = ts.ToString(@"hh\:mm\:ss");
-							Debug.WriteLine($"Raw timecode: {timecode}, Formatted timecode: {formattedTime}");
+							Log($"Raw timecode: {timecode}, Formatted timecode: {formattedTime}");
 							// Update the recording timer text
 							RecordingTimecode = formattedTime;
-							Debug.WriteLine($"Recording timer updated: {timecode}");
+							Log($"Recording timer updated: {timecode}");
 						}
 						else if (requestType == "GetProfileList")
 							ProfileName = message.D["responseData"]?["currentProfileName"]?.ToObject<string>() ?? "";
@@ -88,7 +87,7 @@ namespace OBS_Status.WebSocket
 						break;
 
 					default:
-						Debug.WriteLine($"Unhandled or future opcode: {message.Op}");
+						Log($"Unhandled or future opcode: {message.Op}");
 						break;
 				}
 			}
