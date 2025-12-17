@@ -7,21 +7,52 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-	<Grid Padding="12">
+	<Grid Padding="12" ColumnSpacing="12">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="150" />
 		</Grid.ColumnDefinitions>
 
-		<!-- Log area (left) -->
-		<TextBox
-			x:Name="LogTextBox"
-			Grid.Column="0"
-			Header="Log"
-			IsReadOnly="True"
-			AcceptsReturn="True"
-			TextWrapping="Wrap"
-			Margin="0,0,12,0" />
+		<Grid
+			Grid.Column="0" >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<!-- Log area (left) -->
+			<ListView
+				x:Name="LogListView"
+				Grid.Row="0"
+				RequestedTheme="Dark"
+				SelectionMode="None">
+				<ListView.ItemContainerStyle>
+					<Style TargetType="ListViewItem">
+						<Setter Property="MinHeight" Value="0"/>
+						<Setter Property="Padding" Value="0"/>
+						<Setter Property="Margin" Value="0"/>
+					</Style>
+				</ListView.ItemContainerStyle>
+				<ListView.Footer>
+					<Canvas Height="100" />
+				</ListView.Footer>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<TextBlock
+							Text="{Binding}" 
+							FontFamily="Consolas" 
+							FontSize="12" 
+							TextWrapping="Wrap" 
+							Foreground="White"/>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			<CheckBox 
+				x:Name="AutoScrollCheckBox" 
+				Grid.Row="1"
+				Content="Auto-scroll" 
+				IsChecked="True" 
+				Margin="10,5"/>
+		</Grid>
 
 		<!-- Settings (right) -->
 		<StackPanel

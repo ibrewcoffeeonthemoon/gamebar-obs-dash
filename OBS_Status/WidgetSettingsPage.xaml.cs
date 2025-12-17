@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using OBS_Status.WebSocket;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Input;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -18,16 +19,28 @@ namespace OBS_Status
     /// </summary>
     public sealed partial class WidgetSettingsPage : Page
     {
-        public WidgetSettingsPage()
+		// Local collection that the ListView binds to
+		private ObservableCollection<string> _localLogs = new ObservableCollection<string>();
+		// Timer to periodically scroll to the last log entry
+		private DispatcherTimer _scrollTimer;
+
+		public WidgetSettingsPage()
         {
             // init UI
             this.InitializeComponent();
 			// load form settings
 			LoadSettings();
 			// load existing log lines
-			LogTextBox.Text = string.Join("\n", LogManager.Snapshot());
+			LogListView.ItemsSource = _localLogs;
+			foreach (var line in LogManager.GetHistory())
+				_localLogs.Add(line);
+			// scroll to bottom in intervals to ensure last log is visible
+			_scrollTimer = new DispatcherTimer();
+			_scrollTimer.Interval = TimeSpan.FromSeconds(1);
+			_scrollTimer.Tick += ScrollLastLogIntoView;
+			_scrollTimer.Start();
 			// subscribe to WidgetLog buffer 
-			LogManager.LineAdded += OnLog;
+			LogManager.LineAdded += OnLogAdded;
 			// store reference to this page in Client singleton
 			Client.Instance.widgetSettingsPage = this;
         }
@@ -39,6 +52,18 @@ namespace OBS_Status
 			AddressTextBox.Text = settings.Values["ObsAddress"] as string ?? "127.0.0.1";
 			PortTextBox.Text = settings.Values["ObsPort"] as string ?? "4455";
 			PasswordBox.Password = settings.Values["ObsPassword"] as string ?? "";
+		}
+
+		void ScrollLastLogIntoView(object sender, object e)
+		{
+			// Only scroll if auto-scroll checkbox is checked
+			if (AutoScrollCheckBox.IsChecked == true)
+			{
+				// Scroll the ListView to show the last log entry
+				var last = LogListView.Items.LastOrDefault();
+				// With Footer present, use Leading alignment to ensure bottom padding is respected
+				LogListView.ScrollIntoView(last, ScrollIntoViewAlignment.Leading);
+			}
 		}
 
 		private void OnSave(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -58,21 +83,22 @@ namespace OBS_Status
 				pwb.SelectAll();
 		}
 
-		private void OnLog(string msg)
+		private void OnLogAdded(string message)
 		{
+			// Safety check for the Dispatcher (the "Zombie" check)
 			try
 			{
-				// Update UI on the appropriate thread
 				_ = Dispatcher?.RunAsync(CoreDispatcherPriority.Normal, () =>
 				{
-					LogTextBox.Text += msg + "\n";
+					// Add the new line to the UI collection
+					_localLogs.Add(message);
 				});
 			}
 			catch (InvalidComObjectException)
 			{
 				// Dispatcher is no longer valid, unsubscribe from log events
-				LogManager.LineAdded -= OnLog;
-				Debug.WriteLine("OnLog: Dispatcher is no longer valid, unsubscribed from log events.");
+				LogManager.LineAdded -= OnLogAdded;
+				Debug.WriteLine("OnLogAdded: Dispatcher is no longer valid, unsubscribed from log events.");
 			}
 			catch (Exception ex)
 			{
