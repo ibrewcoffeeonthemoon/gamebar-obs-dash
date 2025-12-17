@@ -13,33 +13,46 @@
 			<ColumnDefinition Width="150" />
 		</Grid.ColumnDefinitions>
 
-		<!-- Log area (left) -->
-		<ListView
-			x:Name="LogListView"
-			Grid.Column="0"
-			RequestedTheme="Dark"
-			SelectionMode="None">
-			<ListView.ItemContainerStyle>
-				<Style TargetType="ListViewItem">
-					<Setter Property="MinHeight" Value="0"/>
-					<Setter Property="Padding" Value="0"/>
-					<Setter Property="Margin" Value="0"/>
-				</Style>
-			</ListView.ItemContainerStyle>
-			<ListView.Footer>
-				<Canvas Height="100" />
-			</ListView.Footer>
-			<ListView.ItemTemplate>
-				<DataTemplate>
-					<TextBlock
-						Text="{Binding}" 
-						FontFamily="Consolas" 
-                        FontSize="12" 
-                        TextWrapping="Wrap" 
-                        Foreground="White"/>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>
+		<Grid
+			Grid.Column="0" >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<!-- Log area (left) -->
+			<ListView
+				x:Name="LogListView"
+				Grid.Row="0"
+				RequestedTheme="Dark"
+				SelectionMode="None">
+				<ListView.ItemContainerStyle>
+					<Style TargetType="ListViewItem">
+						<Setter Property="MinHeight" Value="0"/>
+						<Setter Property="Padding" Value="0"/>
+						<Setter Property="Margin" Value="0"/>
+					</Style>
+				</ListView.ItemContainerStyle>
+				<ListView.Footer>
+					<Canvas Height="100" />
+				</ListView.Footer>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<TextBlock
+							Text="{Binding}" 
+							FontFamily="Consolas" 
+							FontSize="12" 
+							TextWrapping="Wrap" 
+							Foreground="White"/>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			<CheckBox 
+				x:Name="AutoScrollCheckBox" 
+				Grid.Row="1"
+				Content="Auto-scroll" 
+				IsChecked="True" 
+				Margin="10,5"/>
+		</Grid>
 
 		<!-- Settings (right) -->
 		<StackPanel
