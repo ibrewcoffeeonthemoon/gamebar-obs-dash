@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using OBS_Status.WebSocket;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -21,6 +20,7 @@ namespace OBS_Status
     {
 		// Local collection that the ListView binds to
 		private ObservableCollection<string> _localLogs = new ObservableCollection<string>();
+		private DispatcherTimer _scrollTimer;
 
 		public WidgetSettingsPage()
         {
@@ -32,6 +32,20 @@ namespace OBS_Status
 			LogListView.ItemsSource = _localLogs;
 			foreach (var line in LogManager.GetHistory())
 				_localLogs.Add(line);
+			// auto-scroll to bottom on new log lines
+			_scrollTimer = new DispatcherTimer();
+			_scrollTimer.Interval = TimeSpan.FromSeconds(1);
+			_scrollTimer.Tick += (s, e) =>
+			{
+				if (LogListView.Items.Count > 0)
+				{
+					var last = LogListView.Items.LastOrDefault();
+					// Using "Leading" alignment often feels smoother for logs
+					LogListView.ScrollIntoView(last, ScrollIntoViewAlignment.Leading);
+				}
+			};
+			_scrollTimer.Start();
+
 			// subscribe to WidgetLog buffer 
 			LogManager.LineAdded += OnLogAdded;
 			// store reference to this page in Client singleton
