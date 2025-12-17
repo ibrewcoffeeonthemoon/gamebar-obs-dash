@@ -8,21 +8,28 @@ namespace OBS_Status
 {
 	public static class LogManager
 	{
-		// In-memory log buffer
-		private static readonly List<string> _lines = new List<string>();
-		// Event fired when a new line is added
+		// The master history
+		private static readonly List<string> _history = new List<string>();
+
+		// The event that the UI will listen to
 		public static event Action<string> LineAdded;
 
-		public static void Add(string message)
+		public static void AddLog(string message)
 		{
-			// Add a new line to the log
-			_lines.Add(message);
-			// Fire event, notifying subscribers
+			lock (_history)
+			{
+				_history.Add(message);
+			}
+			// Tell the UI a new line is ready
 			LineAdded?.Invoke(message);
 		}
 
-		// Get a snapshot of the current log lines
-		public static IEnumerable<string> Snapshot() => _lines;
+		public static List<string> GetHistory()
+		{
+			lock (_history)
+			{
+				return new List<string>(_history);
+			}
+		}
 	}
-
 }

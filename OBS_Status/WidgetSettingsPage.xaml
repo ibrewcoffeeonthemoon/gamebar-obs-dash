@@ -14,14 +14,23 @@
 		</Grid.ColumnDefinitions>
 
 		<!-- Log area (left) -->
-		<TextBox
-			x:Name="LogTextBox"
+		<ListView
+			x:Name="LogListView"
 			Grid.Column="0"
-			Header="Log"
-			IsReadOnly="True"
-			AcceptsReturn="True"
-			TextWrapping="Wrap"
-			Margin="0,0,12,0" />
+			RequestedTheme="Dark"
+			Background="#1E1E1E"
+			SelectionMode="None">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<TextBlock
+						Text="{Binding}" 
+						FontFamily="Consolas" 
+                        FontSize="12" 
+                        TextWrapping="Wrap" 
+                        Foreground="White"/>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
 
 		<!-- Settings (right) -->
 		<StackPanel
