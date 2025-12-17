@@ -53,7 +53,6 @@ namespace OBS_Status.WebSocket
 			// append message to debug output
 			Debug.WriteLine(message);
 			// also send to settings page log if available
-			//widgetSettingsPage?.LogMessage(message);
 			LogManager.AddLog(message);
 		}
 	}

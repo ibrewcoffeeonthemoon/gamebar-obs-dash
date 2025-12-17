@@ -29,7 +29,6 @@ namespace OBS_Status
 			// load form settings
 			LoadSettings();
 			// load existing log lines
-			//LogTextBox.Text = string.Join("\n", LogManager.Snapshot());
 			LogListView.ItemsSource = _localLogs;
 			foreach (var line in LogManager.GetHistory())
 				_localLogs.Add(line);
@@ -65,28 +64,6 @@ namespace OBS_Status
 				pwb.SelectAll();
 		}
 
-		//private void OnLog(string msg)
-		//{
-		//	try
-		//	{
-		//		// Update UI on the appropriate thread
-		//		_ = Dispatcher?.RunAsync(CoreDispatcherPriority.Normal, () =>
-		//		{
-		//			LogTextBox.Text += msg + "\n";
-		//		});
-		//	}
-		//	catch (InvalidComObjectException)
-		//	{
-		//		// Dispatcher is no longer valid, unsubscribe from log events
-		//		LogManager.LineAdded -= OnLog;
-		//		Debug.WriteLine("OnLog: Dispatcher is no longer valid, unsubscribed from log events.");
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		// Log other exceptions
-		//		Debug.WriteLine("OnLog exception: " + ex.Message);
-		//	}
-		//}
 		private void OnLogAdded(string message)
 		{
 			// Safety check for the Dispatcher (the "Zombie" check)
@@ -98,10 +75,16 @@ namespace OBS_Status
 					_localLogs.Add(message);
 				});
 			}
-			catch (System.Runtime.InteropServices.InvalidComObjectException)
+			catch (InvalidComObjectException)
 			{
-				// If we get here, the page died before we could unsubscribe
+				// Dispatcher is no longer valid, unsubscribe from log events
 				LogManager.LineAdded -= OnLogAdded;
+				Debug.WriteLine("OnLogAdded: Dispatcher is no longer valid, unsubscribed from log events.");
+			}
+			catch (Exception ex)
+			{
+				// Log other exceptions
+				Debug.WriteLine("OnLog exception: " + ex.Message);
 			}
 		}
 	}

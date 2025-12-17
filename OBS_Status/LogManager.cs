@@ -16,6 +16,7 @@ namespace OBS_Status
 
 		public static void AddLog(string message)
 		{
+			// Add to the master history, locking to avoid race conditions
 			lock (_history)
 			{
 				_history.Add(message);
@@ -26,6 +27,7 @@ namespace OBS_Status
 
 		public static List<string> GetHistory()
 		{
+			// Return a copy of the master history, locking to avoid race conditions
 			lock (_history)
 			{
 				return new List<string>(_history);
