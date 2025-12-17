@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using OBS_Status.WebSocket;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -46,6 +48,16 @@ namespace OBS_Status
 				tb.SelectAll();
 			else if (sender is PasswordBox pwb)
 				pwb.SelectAll();
+		}
+
+		public void LogMessage(string message)
+		{
+			// append message to log textbox
+			_ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			{
+				LogTextBox.Text += message + "\n";
+			});
+
 		}
 	}
 }
