@@ -8,6 +8,7 @@ using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -55,10 +56,14 @@ namespace OBS_Status
 
 		void ScrollLastLogIntoView(object sender, object e)
 		{
-			// Scroll the ListView to show the last log entry
-			var last = LogListView.Items.LastOrDefault();
-			// With Footer present, use Leading alignment to ensure bottom padding is respected
-			LogListView.ScrollIntoView(last, ScrollIntoViewAlignment.Leading);
+			// Only scroll if auto-scroll checkbox is checked
+			if (AutoScrollCheckBox.IsChecked == true)
+			{
+				// Scroll the ListView to show the last log entry
+				var last = LogListView.Items.LastOrDefault();
+				// With Footer present, use Leading alignment to ensure bottom padding is respected
+				LogListView.ScrollIntoView(last, ScrollIntoViewAlignment.Leading);
+			}
 		}
 
 		private void OnSave(object sender, Windows.UI.Xaml.RoutedEventArgs e)
