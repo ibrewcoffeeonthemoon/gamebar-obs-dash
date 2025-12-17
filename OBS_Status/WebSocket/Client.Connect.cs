@@ -49,7 +49,7 @@ namespace OBS_Status.WebSocket
 				string address = ApplicationData.Current.LocalSettings.Values["ObsAddress"] as string;
 				string port = ApplicationData.Current.LocalSettings.Values["ObsPort"] as string;
 				string endpoint = $"ws://{address}:{port}";
-				Debug.WriteLine($"Connecting to OBS at {endpoint}...");
+				Log($"Connecting to OBS at {endpoint}...");
 				await socket.ConnectAsync(new Uri(endpoint));
 			}
 			catch (Exception ex)
