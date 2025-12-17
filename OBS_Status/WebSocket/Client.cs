@@ -48,6 +48,13 @@ namespace OBS_Status.WebSocket
 				await Task.Delay(1000);
 			}
 		}
+		public void Log(string message)
+		{
+			// append message to debug output
+			Debug.WriteLine(message);
+			// also send to settings page log if available
+			widgetSettingsPage?.LogMessage(message);
+		}
 	}
 }
 
