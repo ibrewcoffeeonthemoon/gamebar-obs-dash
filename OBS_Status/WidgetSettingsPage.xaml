@@ -26,6 +26,9 @@
 					<Setter Property="Margin" Value="0"/>
 				</Style>
 			</ListView.ItemContainerStyle>
+			<ListView.Footer>
+				<Canvas Height="100" />
+			</ListView.Footer>
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<TextBlock

@@ -20,6 +20,7 @@ namespace OBS_Status
     {
 		// Local collection that the ListView binds to
 		private ObservableCollection<string> _localLogs = new ObservableCollection<string>();
+		// Timer to periodically scroll to the last log entry
 		private DispatcherTimer _scrollTimer;
 
 		public WidgetSettingsPage()
@@ -32,20 +33,11 @@ namespace OBS_Status
 			LogListView.ItemsSource = _localLogs;
 			foreach (var line in LogManager.GetHistory())
 				_localLogs.Add(line);
-			// auto-scroll to bottom on new log lines
+			// scroll to bottom in intervals to ensure last log is visible
 			_scrollTimer = new DispatcherTimer();
 			_scrollTimer.Interval = TimeSpan.FromSeconds(1);
-			_scrollTimer.Tick += (s, e) =>
-			{
-				if (LogListView.Items.Count > 0)
-				{
-					var last = LogListView.Items.LastOrDefault();
-					// Using "Leading" alignment often feels smoother for logs
-					LogListView.ScrollIntoView(last, ScrollIntoViewAlignment.Leading);
-				}
-			};
+			_scrollTimer.Tick += ScrollLastLogIntoView;
 			_scrollTimer.Start();
-
 			// subscribe to WidgetLog buffer 
 			LogManager.LineAdded += OnLogAdded;
 			// store reference to this page in Client singleton
@@ -59,6 +51,14 @@ namespace OBS_Status
 			AddressTextBox.Text = settings.Values["ObsAddress"] as string ?? "127.0.0.1";
 			PortTextBox.Text = settings.Values["ObsPort"] as string ?? "4455";
 			PasswordBox.Password = settings.Values["ObsPassword"] as string ?? "";
+		}
+
+		void ScrollLastLogIntoView(object sender, object e)
+		{
+			// Scroll the ListView to show the last log entry
+			var last = LogListView.Items.LastOrDefault();
+			// With Footer present, use Leading alignment to ensure bottom padding is respected
+			LogListView.ScrollIntoView(last, ScrollIntoViewAlignment.Leading);
 		}
 
 		private void OnSave(object sender, Windows.UI.Xaml.RoutedEventArgs e)
