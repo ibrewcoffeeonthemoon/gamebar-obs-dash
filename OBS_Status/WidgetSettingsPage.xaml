@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-	<Grid Padding="12">
+	<Grid Padding="12" ColumnSpacing="12">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="150" />
@@ -18,8 +18,14 @@
 			x:Name="LogListView"
 			Grid.Column="0"
 			RequestedTheme="Dark"
-			Background="#1E1E1E"
 			SelectionMode="None">
+			<ListView.ItemContainerStyle>
+				<Style TargetType="ListViewItem">
+					<Setter Property="MinHeight" Value="0"/>
+					<Setter Property="Padding" Value="0"/>
+					<Setter Property="Margin" Value="0"/>
+				</Style>
+			</ListView.ItemContainerStyle>
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<TextBlock
