@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using OBS_Status.WebSocket;
 using Windows.Storage;
 using Windows.UI.Core;
@@ -53,11 +55,18 @@ namespace OBS_Status
 		public void LogMessage(string message)
 		{
 			// append message to log textbox
-			_ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			try
 			{
-				LogTextBox.Text += message + "\n";
-			});
-
+				_ = Dispatcher?.RunAsync(CoreDispatcherPriority.Normal, () =>
+				{
+					LogTextBox.Text += message + "\n";
+				});
+			} 
+			catch (InvalidComObjectException) { }
+			catch (Exception ex)
+			{
+				Debug.WriteLine("LogMessage exception: " + ex.Message);
+			}
 		}
 	}
 }
