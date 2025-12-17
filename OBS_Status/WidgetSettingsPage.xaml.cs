@@ -62,6 +62,7 @@ namespace OBS_Status
 		{
 			try
 			{
+				// Update UI on the appropriate thread
 				_ = Dispatcher?.RunAsync(CoreDispatcherPriority.Normal, () =>
 				{
 					LogTextBox.Text += msg + "\n";
@@ -71,27 +72,13 @@ namespace OBS_Status
 			{
 				// Dispatcher is no longer valid, unsubscribe from log events
 				LogManager.LineAdded -= OnLog;
-				Debug.WriteLine("OnLog: Dispatcher is no longer valid, unsubscribing from log events.");
+				Debug.WriteLine("OnLog: Dispatcher is no longer valid, unsubscribed from log events.");
 			}
 			catch (Exception ex)
 			{
+				// Log other exceptions
 				Debug.WriteLine("OnLog exception: " + ex.Message);
 			}
 		}
 	}
-
-	public static class LogManager
-	{
-		private static readonly List<string> _lines = new List<string>();
-		public static event Action<string> LineAdded;
-
-		public static void Add(string message)
-		{
-			_lines.Add(message);
-			LineAdded?.Invoke(message);
-		}
-
-		public static IEnumerable<string> Snapshot() => _lines;
-	}
-
 }
