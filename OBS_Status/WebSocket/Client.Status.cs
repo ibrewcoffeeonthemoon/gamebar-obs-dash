@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -93,7 +92,7 @@ namespace OBS_Status.WebSocket
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine($"Failed to send GetRecordStatus: {ex.Message}");
+				Log($"Failed to send GetRecordStatus: {ex.Message}");
 			}
 		}
 		private async Task RequestGetProfileList()
@@ -120,7 +119,7 @@ namespace OBS_Status.WebSocket
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine($"Failed to send GetProfileList: {ex.Message}");
+				Log($"Failed to send GetProfileList: {ex.Message}");
 			}
 		}
 		private async Task RequestGetSceneList()
@@ -147,7 +146,7 @@ namespace OBS_Status.WebSocket
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine($"Failed to send GetSceneList: {ex.Message}");
+				Log($"Failed to send GetSceneList: {ex.Message}");
 			}
 		}
 

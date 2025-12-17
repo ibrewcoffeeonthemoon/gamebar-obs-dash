@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -24,7 +23,7 @@ namespace OBS_Status.WebSocket
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine("Error while sending message: " + ex.Message);
+				Log("Error while sending message: " + ex.Message);
 				IsConnected = false; // Mark as disconnected on error
 			}
 		}

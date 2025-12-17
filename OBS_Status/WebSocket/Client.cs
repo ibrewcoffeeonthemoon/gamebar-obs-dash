@@ -23,7 +23,7 @@ namespace OBS_Status.WebSocket
 		// heartbeat loop
 		public async Task Run()
 		{
-			Debug.WriteLine("Client Run(): starting heartbeat loop.");
+			Log("Client Run(): starting heartbeat loop.");
 			while (true)
 			{
 				// if not connected, try to connect first
