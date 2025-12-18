@@ -53,8 +53,8 @@
                 <HomeMenuVisible>true</HomeMenuVisible>
                 <PinningSupported>true</PinningSupported>
                 <SettingsSupported AppExtensionId="WidgetSettings" />
-                  <ActivateAfterInstall>true</ActivateAfterInstall>
-                  <FavoriteAfterInstall>true</FavoriteAfterInstall>
+                <ActivateAfterInstall>true</ActivateAfterInstall>
+                <FavoriteAfterInstall>true</FavoriteAfterInstall>
                 <Window>
                   <Size>
                     <MinHeight>50</MinHeight>
